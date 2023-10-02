@@ -4,7 +4,6 @@ import Login from "./Login";
 import Register from "./Register";
 import Reset from "./Reset";
 import Dashboard from "./Dashboard";
-import myLogo from"./pictures/findroomielogo1.jpg"
 
 function App() {
     return (
