@@ -21,8 +21,8 @@ function Login() {
     return (
         <div className="login">  
             <div className="login__container">
-                <span className="logo">FindMyRoomie</span>
-                <span className="title">Sign In</span>
+                <img src={require("../pictures/FindMyRoomieLogo.png")} alt="FindMyRoomie"/>
+                <span className="title">Login to Find<b>Your</b>Roomie</span>
                 <input
                     type="text"
                     className="login__textBox"
