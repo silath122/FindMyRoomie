@@ -4,20 +4,33 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-image: linear-gradient(to bottom right, #ef9efa, #fb44fe);
 }
 
 .login__container {
     display: flex;
     flex-direction: column;
     text-align: center;
-    background-color: #dcdcdc;
+    background-color: #eae8e8;
     padding: 30px;
+    .logo{
+        color: #1006bd;
+        font-weight: bold;
+        font-size: 30px;
+
+    }
+    .title{
+        color: #1006bd;
+        font-size: 16px; 
+        margin-bottom: 5px;
+    }
 }
 
 .login__textBox {
     padding: 10px;
     font-size: 18px;
     margin-bottom: 10px;
+    
 }
 
 .login__btn {

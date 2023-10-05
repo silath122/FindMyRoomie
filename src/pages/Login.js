@@ -19,8 +19,10 @@ function Login() {
     }, [user, loading, navigate]);
 
     return (
-        <div className="login">
+        <div className="login">  
             <div className="login__container">
+                <span className="logo">FindMyRoomie</span>
+                <span className="title">Sign In</span>
                 <input
                     type="text"
                     className="login__textBox"

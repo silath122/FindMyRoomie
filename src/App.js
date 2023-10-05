@@ -4,9 +4,10 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Reset from "./pages/Reset";
 import Dashboard from "./pages/Dashboard";
-import myLogo from"./pictures/findroomielogo1.jpg"
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import DirectMessage from "./pages/DirectMessage";
+import NoPage from "./pages/NoPage"
 
 function App() {
     //new comment
@@ -20,6 +21,8 @@ function App() {
                     <Route exact path="/dashboard" element={<Dashboard />} />
                     <Route exact path="/home" element={<Home />}/>
                     <Route exact path="/profile" element={<Profile />} />
+                    <Route exact path="/messages" element={<DirectMessage />} />
+                    <Route path="*" element={<NoPage/>}/>
                 </Routes>
             </Router>
         </div>
