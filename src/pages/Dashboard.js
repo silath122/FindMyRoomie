@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "../styling/Dashboard.css"
 import { auth, firestore, logout } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import myLogo from "../findroomielogo1.jpg"
 function Dashboard() {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
