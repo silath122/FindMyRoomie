@@ -1,10 +1,18 @@
 import React from "react";
 import Navbar from "../components/Navbar"
+import Chat from "../components/Chat"
+import MessageNav from "../components/MessageNav";
+import "../styling/DirectMessage.css";
 function DirectMessage(){
     return(
-        <div>
+        <div className = "DirectMessagePage">
             <Navbar/>
-            <div>DirectMessage Page</div>
+            <div className="pageContainer">
+                <div className = "container">
+                    <MessageNav/>
+                    <Chat/>
+                </div>
+            </div>
         </div>
     )
 }

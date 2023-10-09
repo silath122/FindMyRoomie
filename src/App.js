@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import DirectMessage from "./pages/DirectMessage";
 import NoPage from "./pages/NoPage"
-
+import Settings from "./pages/Settings"
 function App() {
     //new comment
     return (
@@ -22,6 +22,7 @@ function App() {
                     <Route exact path="/home" element={<Home />}/>
                     <Route exact path="/profile" element={<Profile />} />
                     <Route exact path="/messages" element={<DirectMessage />} />
+                    <Route exact path="/settings" element={<Settings/>} />
                     <Route path="*" element={<NoPage/>}/>
                 </Routes>
             </Router>
