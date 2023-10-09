@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import "../styling/Dashboard.css"
 import { auth, firestore, logout } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
-
+import SurveyForm from "../SurveyForm";
 function Dashboard() {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
+    const [formComplete, setFormComplete] = useState(false);
     const navigate = useNavigate();
 
     const fetchUserName = async () => {
@@ -23,23 +24,36 @@ function Dashboard() {
         }
     };
 
+    const handleFormSubmit = (data) => {
+           setFormComplete(true);
+    };
+
+
     useEffect(() => {
         if (loading) return;
         if (!user) return navigate("/");
+        if (formComplete) return navigate("/home");
 
         fetchUserName();
-    }, [user, loading]);
+    }, [user, loading, formComplete]);
 
     return (
         <div className="dashboard">
             <div className="dashboard__container">
-
+                <myLogo/>
                 Logged in as
                 <div>{name}</div>
                 <div>{user?.email}</div>
                 <button className="dashboard__btn" onClick={logout}>
                     Logout
                 </button>
+                <div>
+                    {formComplete ? (
+                        <div></div>
+                    ) : (
+                        <SurveyForm onSubmit={handleFormSubmit} />
+                    )}
+                </div>
             </div>
         </div>
     );
