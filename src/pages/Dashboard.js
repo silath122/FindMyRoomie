@@ -3,7 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, firestore, logout } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import myLogo from "../pictures/logo512.png"
+import Navbar from "../components/Navbar";
 function Dashboard() {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
@@ -30,9 +30,10 @@ function Dashboard() {
     }, [user, loading]);
 
     return (
+        
         <div className="dashboard">
+            <Navbar/>
             <div className="dashboard__container">
-                <myLogo/>
                 Logged in as
                 <div>{name}</div>
                 <div>{user?.email}</div>
