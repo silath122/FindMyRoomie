@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { auth, logInWithEmailAndPassword, signInWithGoogle } from "./firebase";
 
-function SurveyForm({ onSubmit }) {
+
+function SurveyForm() {
     const [formData, setFormData] = useState({
         name: '',
         age: '',
@@ -18,6 +21,8 @@ function SurveyForm({ onSubmit }) {
         roommateamount: 0,
 
     });
+    const [formComplete, setFormComplete] = useState(false);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -30,22 +35,43 @@ function SurveyForm({ onSubmit }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        onSubmit(formData);
+       setFormComplete(true)
     };
+
+    const handleFormSubmit = (data) => {
+        setFormComplete(true);
+    };
+
+    useEffect(() => {
+
+        if (formComplete) navigate("/home");
+
+    }, [formComplete]);
 
     return (
         <form onSubmit={handleSubmit}>
             <div>
                 <label>Name:</label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} />
+                <input type="text"
+                       name="name"
+                       value={formData.name}
+                       onChange={handleChange} />
             </div>
             <div>
                 <label>Age:</label>
-                <input type="number" name="age" value={formData.age} onChange={handleChange} />
+                <input
+                    type="number"
+                    name="age"
+                    value={formData.age}
+                    onChange={handleChange} />
             </div>
             <div>
                 <label>email:</label>
-                <input type="text" name="age" value={formData.email} onChange={(event)=>{
+                <input
+                    type="text"
+                    name="age"
+                    value={formData.email}
+                    onChange={(event)=>{
                     const value = event.target.value;
                     setFormData({
                         ...formData,
@@ -54,7 +80,10 @@ function SurveyForm({ onSubmit }) {
             </div>
             <div>
                 <label>year in school:</label>
-                <input type="text" name="age" value={formData.grade}
+                <input
+                    type="text"
+                    name="age"
+                    value={formData.grade}
                        onChange={(event)=>{
                            const value = event.target.value;
                            setFormData({
@@ -65,7 +94,10 @@ function SurveyForm({ onSubmit }) {
             </div>
             <div>
                 <label>tell us about yourself:</label>
-                <input type="text" name="age" value={formData.bio}
+                <input
+                    type="text"
+                    name="age"
+                    value={formData.bio}
                        onChange={(event)=>{
                            const value = event.target.value;
                            setFormData({
@@ -195,7 +227,8 @@ function SurveyForm({ onSubmit }) {
                     <option value="3">4 or more</option>
                 </select>
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit"
+                    onSubmit={handleFormSubmit}>Submit</button>
         </form>
     );
 }

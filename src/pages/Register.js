@@ -27,7 +27,7 @@ function Register() {
 
     return (
         <div className="register">
-            <div className="register__container">
+            <div className="text">
                 <input
                     type="text"
                     className="register__textBox"
@@ -37,14 +37,14 @@ function Register() {
                 />
                 <input
                     type="text"
-                    className="register__textBox"
+                    className="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="E-mail Address"
                 />
                 <input
                     type="password"
-                    className="register__textBox"
+                    className="text"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"

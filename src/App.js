@@ -18,9 +18,7 @@ function App() {
     return (
 
         <div className="app">
-
             <Router>
-
                         <Routes>
                             <Route path="/" element={<Login/>}/>
                             <Route path ="/survey" element={<SurveyForm/>}/>
