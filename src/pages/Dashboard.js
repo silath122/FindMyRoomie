@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import "./Dashboard.css"
-import { auth, firestore, logout } from "./firebase";
+import "../styling/Dashboard.css"
+import { auth, firestore, logout } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import myLogo from "./pictures/findroomielogo1.jpg"
+
 function Dashboard() {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
@@ -33,7 +33,7 @@ function Dashboard() {
     return (
         <div className="dashboard">
             <div className="dashboard__container">
-                <myLogo/>
+
                 Logged in as
                 <div>{name}</div>
                 <div>{user?.email}</div>

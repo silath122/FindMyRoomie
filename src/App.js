@@ -4,7 +4,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Reset from "./pages/Reset";
 import Dashboard from "./pages/Dashboard";
-import myLogo from"./pictures/findroomielogo1.jpg"
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 
