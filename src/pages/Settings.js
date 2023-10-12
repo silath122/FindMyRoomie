@@ -1,10 +1,11 @@
 import React from "react";
 import Navbar from "../components/Navbar"
-export default function Home(){
+
+export default function Settings(){
     return(
         <div>
-            <Navbar />
-            <div>Welcome Back</div>
+            <Navbar/>
+            <div>Settings</div>
         </div>
     )
 }
