@@ -1,9 +1,10 @@
 import React from "react";
 const MessageNav = () => {
     return(
-        <div>
-            <div className="messageNav">MessageNav</div>
+        <div className="messageNav">
+            MessageNav
         </div>
+        
     )
 }
 export default MessageNav

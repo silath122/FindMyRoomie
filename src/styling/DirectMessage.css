@@ -14,6 +14,7 @@
             height: 80%;
             display: flex;
             overflow: hidden;
+            flex-direction: row;
             
             .messageNav{
                 flex: 1;
