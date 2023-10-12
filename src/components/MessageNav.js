@@ -1,8 +1,13 @@
 import React from "react";
+import Search from "./Search";
+import Chats from "./Chats"
+import Chat from "./Chat"
+import "../styling/DirectMessage.css"
 const MessageNav = () => {
     return(
         <div className="messageNav">
-            MessageNav
+            <Search/>
+            <Chats/>
         </div>
         
     )
