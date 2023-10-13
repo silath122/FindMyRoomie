@@ -17,7 +17,7 @@
             
             .messageNav{
                 flex: 1;
-                background-color:#425BBD;
+                background-color: #2a3a78;
                 .chats{
                     .userChat{
                         padding: 10px;
@@ -53,6 +53,7 @@
                 
                 .search{
                     border-bottom: 1px solid black;
+                    
                     .userChat{
                         padding: 10px;
                         display: flex;
@@ -60,14 +61,13 @@
                         gap: 10px;
                         color: white;
                         cursor: pointer;
-                        
                         .userChatInfo{
                             span{font-size: 1px; font-weight: normal;}
                             p{font-size: 1px; color: lightgrey;}
                             
                         }
                         &:hover{
-                            background-color: #82BBD3;
+                            background-color: #34468a;
                         }
                         
                     }
@@ -86,6 +86,7 @@
                     }
                     .searchForm input{
                         background-color: transparent;
+                        font-size: 16px;
                         border: none;
                         color: white;
                         outline: none;
@@ -98,13 +99,13 @@
                 }
             }
             .chat{
-                flex: 2;
+                flex: 5;
                 .chatInfo{
                     height: 50px;
-                    background-color: #82BBD3;
+                    background-color: #425BBD;
                     display: flex;
                     align-items: center;
-                    justify-content: space-between;
+                    justify-content: right;
                     padding: 10px;
                     font-size: 28px;
                     font-weight: 300;
@@ -193,14 +194,16 @@
                 .input button{
                     padding: 10px 20px;
                     font-size: 14px;
-                    border: none;
+                    border: 1px solid #2a3a78;;
                     border-radius: 5px;
-                    color: white;
-                    background-color:#82BBD3;
+                    color: black;
+                    background-color:#D9DEF2;
                     transition: background-color 0.1s;
                 }
                 .input button:hover{
                     background-color: #425BBD;
+                    color: white;
+                    border: 1px solid white;
                 }
             }
         }
