@@ -1,14 +1,14 @@
 .DirectMessagePage{
     height:89vh;
     .pageContainer{
-        background-color: lightblue;
+        background-color: white;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
 
         .container{
-            border: 1px solid white;
+            border: 2px solid black;
             border-radius: 10px;
             width: 65%;
             height: 80%;
@@ -17,7 +17,7 @@
             
             .messageNav{
                 flex: 1;
-                background-color:darkblue;
+                background-color:#4d7d92;
                 .chats{
                     .userChat{
                         padding: 10px;
@@ -34,7 +34,7 @@
                             font-size: 10px;
                         }
                         &:hover{
-                            background-color: aqua;
+                            background-color: #425BBD;
                         }
                         
                     }
@@ -64,7 +64,7 @@
                             p{font-size: 1px; color: lightgrey;}
                         }
                         &:hover{
-                            background-color: aqua;
+                            background-color: #425BBD;
                         }
                         
                     }
@@ -79,12 +79,14 @@
                     .searchForm{
                         padding: 10px; 
                         outline: none;
+                        border-bottom: 1px solid black;
                     }
                     .searchForm input{
                         background-color: transparent;
                         border: none;
                         color: white;
                         outline: none;
+                        
                         &:placeholder{
                             color: grey;
                         }
@@ -93,18 +95,17 @@
             }
             .chat{
                 flex: 2;
-                background-color: red;
                 .chatInfo{
                     height: 50px;
-                    background-color: black;
+                    background-color: #82BBD3;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
                     padding: 10px;
-                    color: grey;
+                    color: White;
                 }
                 .messages{
-                    background-color: lime;
+                    background-color: #D9DEF2;
                     padding: 10px;  
                     height: calc(100% - 160px)
                 }
