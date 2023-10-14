@@ -34,7 +34,7 @@
                             font-size: 12px;
                         }
                         &:hover{
-                            background-color: #82BBD3;
+                            background-color: #34468a;
                         }
                         
                     }
@@ -91,7 +91,7 @@
                         color: white;
                         outline: none;
                         &::placeholder{
-                            color: white;   
+                            color: rgb(219, 219, 251);   
                         }
                         
                     }
