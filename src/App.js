@@ -6,12 +6,13 @@ import Reset from "./pages/Reset";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import NavigationBar from "./NavigationBar";
-import Grid from '@mui/material/Grid';
+import Sidebar from "./Sidebar";
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import SurveyForm from "./SurveyForm";
+import Matches from "./pages/Matches"
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
                             <Route path="/dashboard" element={<Dashboard/>}/>
                             <Route path="/home" element={<Home/>}/>
                             <Route path="/profile" element={<Profile/>}/>
+                            <Route path="/matches" element={<Matches/>}/>
                         </Routes>
             </Router>
         </div>

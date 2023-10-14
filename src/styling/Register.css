@@ -7,6 +7,8 @@
 }
 
 .register__container {
+    height: 40vh;
+    width: 50vw;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -26,13 +28,38 @@
     margin-bottom: 10px;
     border: none;
     color: white;
-    background-color: black;
+    background-color:  #82BBD3;
+    margin-top: 10px;
+    width: 250px;
 }
 
 .register__google {
-    background-color: #4285f4;
+    background-color:  #425BBD;
+    width: 250px;
 }
 
 .register div {
     margin-top: 7px;
 }
+
+.text {
+    padding: 7px;
+    margin-left: 2px;
+    width: 106px;
+    margin-bottom: 5px;
+
+}
+
+.login__tab {
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border: none;
+    color: white;
+    background-color:  #82BBD3;
+    margin-top: 10px;
+    width: 250px;
+
+
+}
+

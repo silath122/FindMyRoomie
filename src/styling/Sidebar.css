@@ -1,4 +1,4 @@
-.NavigationBar {
+.Sidebar {
     position: fixed;
     left: 0;
     top: 0;
@@ -23,10 +23,11 @@ li {
 a {
     text-decoration: none;
     color: black;
-    font-size: 20px; /* Increase font size for bigger buttons */
+    font-size: 10px; /* Increase font size for bigger buttons */
     padding: 10px 20px; /* Add padding to make buttons bigger */
     border-radius: 5px; /* Add rounded corners for a button-like appearance */
-    background-color: #3256db; /* Change button background color */
+    background-color: #c3dacd; /* Change button background color */
     display: block; /* Make links behave like block-level elements */
     transition: background-color 0.3s ease; /* Add a smooth hover effect */
+    margin: 10px;
 }

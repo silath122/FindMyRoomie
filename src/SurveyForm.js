@@ -1,7 +1,173 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, logInWithEmailAndPassword, signInWithGoogle } from "./firebase";
+import "survey-core/defaultV2.min.css";
+import { Model } from "survey-core";
+import { Survey } from "survey-react-ui";
+import './styling/SurveyForm.css'
 
+const surveyJson = {
+    elements: [
+        {
+            name: "FirstName",
+            title: "Enter your first and last name:",
+            type: "text"
+        },
+        {
+            age: "age",
+            title: "Enter your age:",
+            type: "text"
+        },
+        {
+            bio: "bio",
+            title: "Tell us about yourself",
+            type: "text"
+        },
+        {
+            year: "year",
+            title: "What school year are you",
+            type: "dropdown",
+            "choices": [{
+                "value": "freshman",
+                "text": "Freshman"
+            }, {
+                "value": "sophmore",
+                "text": "Sophomore"
+            }, {
+                "value": "junior",
+                "text": "Junior"
+            }, {
+                "value": "senior",
+                "text": "Senior"
+            }]
+        },
+        {
+            studyHours: "year",
+            title: "How much do you like to study daily?",
+            type: "dropdown",
+            "choices": [{
+                "value": "0-1",
+                "text": "0-1 hours"
+            }, {
+                "value": "2 hours",
+                "text": "2 hours"
+            }, {
+                "value": "3 hours",
+                "text": "3 hours"
+            }, {
+                "value": "4+",
+                "text": "4+ hours"
+            }]
+        },
+        {
+            sleep: "sleep",
+            title: "What time do you typically go to sleep?",
+            type: "dropdown",
+            "choices": [{
+                "value": "before 10",
+                "text": "before 10"
+            }, {
+                "value": "10-11",
+                "text": "10-11 pm"
+            }, {
+                "value": "midgnight",
+                "text": "midnight"
+            }, {
+                "value": "after midnight",
+                "text": "after midnight"
+            }]
+        },
+        {
+            wakeUp: "wakeUp",
+            title: "What time do you typically wake up?",
+            type: "dropdown",
+            "choices": [{
+                "value": "before 6",
+                "text": "before 6"
+            }, {
+                "value": "7-8",
+                "text": "7-8 am"
+            }, {
+                "value": "9-10",
+                "text": "9-10 am"
+            }, {
+                "value": "11 or later",
+                "text": "11 or later"
+            }]
+        },
+        {
+            "type": "matrix",
+            "name": "qualities",
+            "title": "Please indicate if you agree or disagree with the following statements",
+            "isRequired": true,
+            "columns": [{
+                "value": 5,
+                "text": "Strongly agree"
+            }, {
+                "value": 4,
+                "text": "Agree"
+            }, {
+                "value": 3,
+                "text": "Neutral"
+            }, {
+                "value": 2,
+                "text": "Disagree"
+            }, {
+                "value": 1,
+                "text": "Strongly disagree"
+            }],
+            "rows": [{
+                "value": "extroverted",
+                "text": "I am extroverted"
+            }, {
+                "value": "closeness",
+                "text": "I want to be close with my roommate(s)"
+            }, {
+                "value": "cleanness",
+                "text": "I am clean"
+            }]
+        },
+        {
+            workAmount: "work-amount",
+            title: "How much do you work a week?",
+            type: "dropdown",
+            "choices": [{
+                "value": "dont",
+                "text": "I don't work"
+            }, {
+                "value": "5-10",
+                "text": "5-10 hours"
+            }, {
+                "value": "11-20",
+                "text": "11-20 hours"
+            }, {
+                "value": "20-30",
+                "text": "20-30 hours"
+            }, {
+                "value": "full time",
+                "text": "full time"
+            }]
+        },
+        {
+            numberRoommates: "number-of-roommates",
+            title: "How many roommates would you like to live with?",
+            type: "dropdown",
+            "choices": [{
+                "value": "1",
+                "text": "1"
+            }, {
+                "value": "2",
+                "text": "2"
+            }, {
+                "value": "3",
+                "text": "3"
+            }, {
+                "value": "4 or more",
+                "text": "4 or more"
+            }]
+        },
+    ]
+};
 
 function SurveyForm() {
     const [formData, setFormData] = useState({
@@ -24,235 +190,27 @@ function SurveyForm() {
     const [formComplete, setFormComplete] = useState(false);
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const survey = new Model(surveyJson);
+    survey.focusFirstQuestionAutomatic = false;
 
-       setFormComplete(true)
-    };
+    const alertResults = useCallback((sender) => {
+        const results = JSON.stringify(sender.data);
+        alert(results);
+    }, []);
 
-    const handleFormSubmit = (data) => {
-        setFormComplete(true);
-    };
+    survey.onComplete.add(alertResults);
 
-    useEffect(() => {
-
-        if (formComplete) navigate("/home");
-
-    }, [formComplete]);
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Name:</label>
-                <input type="text"
-                       name="name"
-                       value={formData.name}
-                       onChange={handleChange} />
+
+            <div style={{ backgroundColor: '#f0f0f0' }}>
+                <div>Please complete the survey before continuing</div>
+                <Survey model={survey} />
             </div>
-            <div>
-                <label>Age:</label>
-                <input
-                    type="number"
-                    name="age"
-                    value={formData.age}
-                    onChange={handleChange} />
-            </div>
-            <div>
-                <label>email:</label>
-                <input
-                    type="text"
-                    name="age"
-                    value={formData.email}
-                    onChange={(event)=>{
-                    const value = event.target.value;
-                    setFormData({
-                        ...formData,
-                        email: value})
-                }} />
-            </div>
-            <div>
-                <label>year in school:</label>
-                <input
-                    type="text"
-                    name="age"
-                    value={formData.grade}
-                       onChange={(event)=>{
-                           const value = event.target.value;
-                           setFormData({
-                               ...formData,
-                               grade: value})
-                       }}
-                />
-            </div>
-            <div>
-                <label>tell us about yourself:</label>
-                <input
-                    type="text"
-                    name="age"
-                    value={formData.bio}
-                       onChange={(event)=>{
-                           const value = event.target.value;
-                           setFormData({
-                               ...formData,
-                               bio: value})
-                       }} />
-            </div>
-            <div>
-                <label>How clean are you?</label>
-                <select name="cleanliness" value={formData.cleanliness}
-                        onChange={(event)=>{
-                            const value = event.target.value;
-                            setFormData({
-                                ...formData,
-                                cleanliness: value})
-                        }}>
-                    <option value="0">Not at all</option>
-                    <option value="1">Slightly</option>
-                    <option value="2">Moderately</option>
-                    <option value="3">Very</option>
-                    <option value="4">Extremely</option>
-                </select>
-            </div>
-            <div>
-                <label>How extroverted are you?</label>
-                <select name="friendliness" value={formData.friendliness}
-                        onChange={(event)=>{
-                            const value = event.target.value;
-                            setFormData({
-                                ...formData,
-                                friendliness: value})
-                        }}>
-                    <option value="0">Not at all</option>
-                    <option value="1">Slightly</option>
-                    <option value="2">Moderately</option>
-                    <option value="3">Very</option>
-                    <option value="4">Extremely</option>
-                </select>
-            </div>
-            <div>
-                <label>How much do you study a day?</label>
-                <select name="friendliness" value={formData.studyAmount}
-                        onChange={(event)=>{
-                            const value = event.target.value;
-                            setFormData({
-                                ...formData,
-                                studyAmount: value})
-                        }}>
-                    <option value="0">0-1 hours</option>
-                    <option value="1">2 hours</option>
-                    <option value="2">3 hours</option>
-                    <option value="3">4+ hours</option>
-                </select>
-            </div>
-            <div>
-                <label>What time to you go to sleep?</label>
-                <select name="friendliness" value={formData.bedtime}
-                        onChange={(event)=>{
-                            const value = event.target.value;
-                            setFormData({
-                                ...formData,
-                                bedtime: value})
-                        }}>
-                    <option value="0">before 10</option>
-                    <option value="1">10-11 pm</option>
-                    <option value="2">around midnight</option>
-                    <option value="3">after midnight</option>
-                </select>
-            </div>
-            <div>
-                <label>What time do you wake up?</label>
-                <select name="friendliness" value={formData.wakeup}
-                        onChange={(event)=>{
-                            const value = event.target.value;
-                            setFormData({
-                                ...formData,
-                                wakeup: value})
-                        }}>
-                    <option value="0">before 6</option>
-                    <option value="1">7-8</option>
-                    <option value="2">9-10</option>
-                    <option value="3">11 or later</option>
-                </select>
-            </div>
-            <div>
-                <label>How much do you work a week?</label>
-                <select name="friendliness" value={formData.workhours}
-                        onChange={(event)=>{
-                            const value = event.target.value;
-                            setFormData({
-                                ...formData,
-                                workhours: value})
-                        }}>
-                    <option value="0">I don't work</option>
-                    <option value="1">5-10 hours</option>
-                    <option value="2">10-15 hours</option>
-                    <option value="3">20- 25 hours</option>
-                    <option value="4"> 25+ hours</option>
-                </select>
-            </div>
-            <div>
-                <label>How close do you want to be with your roommate/s?</label>
-                <select name="friendliness" value={formData.closeness}
-                        onChange={(event)=>{
-                            const value = event.target.value;
-                            setFormData({
-                                ...formData,
-                                closeness: value})
-                        }}>
-                    <option value="0">just roommates</option>
-                    <option value="1">friendly</option>
-                    <option value="2">best friends!</option>
-                </select>
-            </div>
-            <div>
-                <label>how many roommates do you want</label>
-                <select name="friendliness" value={formData.roommateamount}
-                        onChange={(event)=>{
-                            const value = event.target.value;
-                            setFormData({
-                                ...formData,
-                                roommateamount: value})
-                        }}>
-                    <option value="0">1</option>
-                    <option value="1">2</option>
-                    <option value="2">3</option>
-                    <option value="3">4 or more</option>
-                </select>
-            </div>
-            <button type="submit"
-                    onSubmit={handleFormSubmit}>Submit</button>
-        </form>
+
     );
 }
 
-function Dashboard() {
-    const [formCompleted, setFormCompleted] = useState(false);
-
-    const handleFormSubmit = (data) => {
-        // Send the form data to your server or update the user's profile
-        // After successful submission, set formCompleted to true
-        setFormCompleted(true);
-    };
-
-    return (
-        <div>
-            {formCompleted ? (
-
-                <div></div>
-            ) : (
-
-                <SurveyForm onSubmit={handleFormSubmit} />
-            )}
-        </div>
-    );
-}
 
 export default SurveyForm;

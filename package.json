@@ -20,6 +20,8 @@
     "react-native": "^0.72.5",
     "react-router-dom": "^6.16.0",
     "react-scripts": "^5.0.1",
+    "survey-core": "^1.9.112",
+    "survey-react-ui": "^1.9.112",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

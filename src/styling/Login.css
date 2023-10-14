@@ -26,13 +26,29 @@
     margin-bottom: 10px;
     border: none;
     color: white;
-    background-color: black;
+    background-color: #82BBD3;
 }
 
 .login__google {
-    background-color: #4285f4;
+    background-color: #425BBD;
+
 }
 
 .login div {
     margin-top: 7px;
+}
+body {
+   background-color: #ECF8F6
+
+}
+.register__button {
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border: none;
+    color: white;
+    background-color:  #82BBD3;
+    margin-top: 10px;
+    width: 250px;
+
 }

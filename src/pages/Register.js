@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
+import surveyForm from "../SurveyForm";
 import {
     auth,
     registerWithEmailAndPassword,
     signInWithGoogle,
+    firestore
 } from "../firebase";
 import "../styling/Register.css";
 
@@ -18,16 +20,33 @@ function Register() {
     const register = () => {
         if (!name) alert("Please enter name");
         registerWithEmailAndPassword(name, email, password);
+        navigate ("/survey");
     };
 
     useEffect(() => {
         if (loading) return;
-        if (user) navigate("/dashboard");
-    }, [user, loading]);
+        // Check the user's survey status in Firestore
+        const checkSurveyStatus = async () => {
+            const userRef = firestore.collection("users").doc(user.uid);
+            const userData = await userRef.get();
+
+            if (userData.exists) {
+                const surveyFilled = userData.data().surveyFilled;
+                if (surveyFilled) {
+                    navigate("/dashboard");
+                }
+            }
+        };
+
+        if (user) {
+            checkSurveyStatus();
+        }
+    }, [user, loading, navigate]);
 
     return (
-        <div className="register">
-            <div className="text">
+        <div className = "register">
+        <div className="register__container">
+            <div className="text1">
                 <input
                     type="text"
                     className="register__textBox"
@@ -49,7 +68,9 @@ function Register() {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                 />
-                <button className="register__btn" onClick={register}>
+                <button
+                    className="register__btn"
+                    onClick={register}>
                     Register
                 </button>
                 <button
@@ -60,9 +81,10 @@ function Register() {
                 </button>
 
                 <div>
-                    Already have an account? <Link to="/">Login</Link> now.
+                    Already have an account? <Link to="/" className="login__tab">Login now</Link>
                 </div>
             </div>
+        </div>
         </div>
     );
 }

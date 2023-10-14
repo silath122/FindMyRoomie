@@ -24,18 +24,15 @@ function Dashboard() {
         }
     };
 
-    const handleFormSubmit = (data) => {
-           setFormComplete(true);
-    };
+
 
 
     useEffect(() => {
         if (loading) return;
         if (!user) return navigate("/");
-        if (formComplete) return navigate("/home");
 
         fetchUserName();
-    }, [user, loading, formComplete]);
+    }, [user, loading, ]);
 
     return (
         <div className="dashboard">
@@ -47,13 +44,7 @@ function Dashboard() {
                 <button className="dashboard__btn" onClick={logout}>
                     Logout
                 </button>
-                <div>
-                    {formComplete ? (
-                        <div></div>
-                    ) : (
-                        <SurveyForm onSubmit={handleFormSubmit} />
-                    )}
-                </div>
+
             </div>
         </div>
     );

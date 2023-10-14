@@ -30,7 +30,7 @@ function Reset() {
                 </button>
 
                 <div>
-                    Don't have an account? <Link to="/register">Register</Link> now.
+                    Don't have an account? <Link to="/register">Register now</Link>
                 </div>
             </div>
         </div>
