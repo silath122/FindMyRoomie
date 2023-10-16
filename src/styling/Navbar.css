@@ -20,6 +20,22 @@
     display: center;
     gap: 1rem
     
+    
+    
+}
+.nav button{
+    padding: 10px 20px;
+    font-size: 14px;
+    border: 1px solid #2a3a78;;
+    border-radius: 5px;
+    color: black;
+    background-color:#D9DEF2;
+    transition: background-color 0.1s;
+}
+.nav button:hover{
+    background-color: #425BBD;
+    color: white;
+    border: 1px solid white;
 }
 .logo{
     height: auto;
