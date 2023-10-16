@@ -1,6 +1,10 @@
 
 .nav{
+
     background-color: #5eb885;
+
+    background-color:  #425BBD;
+
     color: white;
     display: flex;
     height: 75px;
@@ -16,13 +20,18 @@
     padding: 0;
     margin: 0;
     list-style: none;
+
     display: flex;
-    display: center;
+    display: flex;
     gap: 1rem
     
 }
 .logo{
+
     height: auto;
+
+    height: 60px;
+
     width: 10rem;
 }
 .nav li.active{
@@ -32,3 +41,15 @@
     background-color: lightblue;
 
 }
+
+.title {
+    text-align: center;
+    font-family: "Arial Narrow", "Segoe UI Historic", fantasy;
+    font-size: 50px;
+    color: #82BBD3;
+    margin:0;
+    padding-top: 10px;
+
+}
+
+

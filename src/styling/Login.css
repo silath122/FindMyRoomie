@@ -4,32 +4,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient(to bottom right, #ef9efa, #fb44fe);
 }
 
 .login__container {
     display: flex;
-    width: 300px;
-    height: 500px;
     flex-direction: column;
     text-align: center;
-    background-color: #eae8e8;
+    background-color:  #425BBD;
     padding: 30px;
-    .img{
-        object-fit: contain;
-    }
-    .title{
-        color: black;
-        font-size: 20px; 
-        margin-bottom: 10px;
-    }
 }
 
 .login__textBox {
     padding: 10px;
     font-size: 18px;
     margin-bottom: 10px;
-    
 }
 
 .login__btn {
@@ -42,7 +30,7 @@
 }
 
 .login__google {
-    background-color: #425BBD;
+    background-color: #d9def2;
 
 }
 
@@ -63,4 +51,8 @@ body {
     margin-top: 10px;
     width: 250px;
 
+}
+
+text {
+    color: black;
 }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "../styling/Login.css";
+import Typography from "@mui/material/Typography";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -16,10 +17,15 @@ function Login() {
     }, [user, loading, navigate]);
 
     return (
-        <div className="login">  
+        <div className="login">
+
             <div className="login__container">
-                <img src={require("../pictures/FindMyRoomieLogo.png")} alt="FindMyRoomie"/>
-                <span className="title">Login to Find<b>Your</b>Roomie</span>
+                <img
+                    src={require("../pictures/FindMyRoomieLogo.png")}
+                    alt="FindMyRoomie"
+                    className="logo"
+                    sx={{ align: 'center', marginLeft: '10px' }}
+                />
                 <input
                     type="text"
                     className="login__textBox"
@@ -40,8 +46,9 @@ function Login() {
                 >
                     Login
                 </button>
-                <button className="login__btn login__google" onClick={signInWithGoogle}>
-                    Login with Google
+                <button  className="login__btn login__google" onClick={signInWithGoogle}>
+                    <Typography style={{color:'black'}}>  Login with Google</Typography>
+
                 </button>
                 <div>
                     Don't have an account? <Link to="/register" className="register__button">Register now</Link>

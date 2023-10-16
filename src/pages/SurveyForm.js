@@ -1,11 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth, logInWithEmailAndPassword, signInWithGoogle } from "./firebase";
+import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
 import "survey-core/defaultV2.min.css";
 import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
-import './styling/SurveyForm.css'
-
+import '../styling/SurveyForm.css'
+import "survey-core/survey.css";
+import Navbar from "../components/Navbar"
+import Typography from "@mui/material/Typography";
 const surveyJson = {
     elements: [
         {
@@ -141,8 +143,8 @@ const surveyJson = {
                 "value": "11-20",
                 "text": "11-20 hours"
             }, {
-                "value": "20-30",
-                "text": "20-30 hours"
+                "value": "21-30",
+                "text": "21-30 hours"
             }, {
                 "value": "full time",
                 "text": "full time"
@@ -202,10 +204,12 @@ function SurveyForm() {
     survey.onComplete.add(alertResults);
 
 
+
     return (
 
             <div style={{ backgroundColor: '#f0f0f0' }}>
-                <div>Please complete the survey before continuing</div>
+                <Navbar/>
+                <Typography variant="h6" align='center' sx={{display:'flex-start', paddingTop:'10px', paddingLeft: '10px' }}>Please complete the survey before continuing:</Typography>
                 <Survey model={survey} />
             </div>
 
