@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
-import surveyForm from "../SurveyForm";
+import SurveyForm from "./SurveyForm";
 import {
     auth,
     registerWithEmailAndPassword,
@@ -9,6 +9,7 @@ import {
     firestore
 } from "../firebase";
 import "../styling/Register.css";
+import Typography from "@mui/material/Typography";
 
 function Register() {
     const [email, setEmail] = useState("");
@@ -46,6 +47,12 @@ function Register() {
     return (
         <div className = "register">
         <div className="register__container">
+            <img
+                src={require("../pictures/FindMyRoomieLogo.png")}
+                alt="FindMyRoomie"
+                className="logo"
+                sx={{ align: 'center', marginLeft: '10px' }}
+            />
             <div className="text1">
                 <input
                     type="text"
@@ -54,6 +61,8 @@ function Register() {
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Full Name"
                 />
+            </div>
+            <div className="text1">
                 <input
                     type="text"
                     className="text"
@@ -61,6 +70,7 @@ function Register() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="E-mail Address"
                 />
+
                 <input
                     type="password"
                     className="text"
@@ -68,6 +78,7 @@ function Register() {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                 />
+            </div>
                 <button
                     className="register__btn"
                     onClick={register}>
@@ -75,15 +86,14 @@ function Register() {
                 </button>
                 <button
                     className="register__btn register__google"
-                    onClick={signInWithGoogle}
-                >
-                    Register with Google
+                    onClick={signInWithGoogle}>
+                    <Typography style={{color:'black'}}> Register with Google </Typography>
                 </button>
 
                 <div>
                     Already have an account? <Link to="/" className="login__tab">Login now</Link>
                 </div>
-            </div>
+
         </div>
         </div>
     );

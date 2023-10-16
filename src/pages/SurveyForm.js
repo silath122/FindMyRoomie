@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth, logInWithEmailAndPassword, signInWithGoogle } from "./firebase";
+import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
 import "survey-core/defaultV2.min.css";
 import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
-import './styling/SurveyForm.css'
-
+import '../styling/SurveyForm.css'
+import Navbar from "../components/Navbar"
 const surveyJson = {
     elements: [
         {
@@ -205,6 +205,7 @@ function SurveyForm() {
     return (
 
             <div style={{ backgroundColor: '#f0f0f0' }}>
+                <Navbar/>
                 <div>Please complete the survey before continuing</div>
                 <Survey model={survey} />
             </div>

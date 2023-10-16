@@ -4,7 +4,7 @@
     top: 0;
     height: 100%;
     width: 200px;
-    background-color: #c3dacd;
+    background-color: #82BBD3;
     color: white;
     padding: 20px;
     flex-direction: column;
@@ -26,7 +26,7 @@ a {
     font-size: 10px; /* Increase font size for bigger buttons */
     padding: 10px 20px; /* Add padding to make buttons bigger */
     border-radius: 5px; /* Add rounded corners for a button-like appearance */
-    background-color: #c3dacd; /* Change button background color */
+    background-color: #d9def2; /* Change button background color */
     display: block; /* Make links behave like block-level elements */
     transition: background-color 0.3s ease; /* Add a smooth hover effect */
     margin: 10px;

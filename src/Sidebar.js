@@ -7,7 +7,7 @@ function Sidebar() {
     return (
         <Navbar expand="lg" className="side-bar">
             <Container>
-                <Navbar.Brand href="/home">Find My Roomie</Navbar.Brand>
+
 
                 <Navbar.Collapse id="basic-navbar-nav">
 

@@ -11,8 +11,9 @@ import Sidebar from "./Sidebar";
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import SurveyForm from "./SurveyForm";
+import SurveyForm from "./pages/SurveyForm";
 import Matches from "./pages/Matches"
+import DirectMessage from "./pages/DirectMessage";
 
 function App() {
 
@@ -29,6 +30,8 @@ function App() {
                             <Route path="/home" element={<Home/>}/>
                             <Route path="/profile" element={<Profile/>}/>
                             <Route path="/matches" element={<Matches/>}/>
+                            <Route path="/DM" element={<DirectMessage/>}/>
+
                         </Routes>
             </Router>
         </div>

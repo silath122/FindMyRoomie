@@ -20,6 +20,7 @@ import {Col} from "react-bootstrap";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth, firestore} from "../firebase";
 import {collection, getDocs, query, where} from "firebase/firestore";
+import Navbar from "../components/Navbar";
 
 
 export default function Home() {
@@ -47,6 +48,7 @@ export default function Home() {
     }, [user, loading, ]);
     return (
         <div>
+            <Navbar/>
             <Grid container spacing={2}>
                 <Grid item xs={2}>
 
