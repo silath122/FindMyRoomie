@@ -1,3 +1,20 @@
 body {
     background-color: #f0f0f0;
 }
+
+.sv_complete_btn {
+    background-color: #425BBD; /* Change to the desired background color */
+    color: #fff; /* Change to the desired text color */
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    /* Add more styles as needed */
+}
+
+/* Style the button on hover (optional) */
+.sv_complete_btn:hover {
+    background-color: #0056b3; /* Change to a different color on hover */
+    /* Add more hover styles if desired */
+}

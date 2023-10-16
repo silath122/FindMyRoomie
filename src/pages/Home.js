@@ -56,14 +56,19 @@ export default function Home() {
 
                 </Grid>
                 <Grid item xs={8}>
-                    <div>
+                    <Typography variant="h6" align='center' sx={{paddingTop: '15px'}}>
                         Welcome Back, {name}
-                    </div>
+                    </Typography>
                         <div>Top Matches: </div>
                     <Card sx={{ width: 800, Height: 50, align: 'center', marginTop: '10px' }}>
-                        <CardMedia
-
-                        />
+                        <Box display="flex" >
+                            <CardMedia
+                                component="img"
+                                height="50%"
+                                image={require("../pictures/jenna.png")}
+                                alt="Sarah Stewart"
+                                sx={{ width: "100px", height: "120px", padding: '10px' }}
+                            />
                         <CardContent>
                             <Typography variant="h5" component="div">
                                 Sarah Stewart
@@ -79,14 +84,20 @@ export default function Home() {
                                 95% Match
                             </Typography>
                         </CardContent>
+                        </Box>
                         <CardActions>
                             <Button size="small">Message Now</Button>
                         </CardActions>
                     </Card>
                     <Card sx={{ width: 800, Height: 50, align: 'center', marginTop: '10px'  }}>
-                        <CardMedia
-
-                        />
+                        <Box display="flex">
+                            <CardMedia
+                                component="img"
+                                height="100%"
+                                image={require("../pictures/lilly.png")}
+                                alt="Sophia Jenkins"
+                                sx={{ width: "100px", height: "130px", padding: '10px' }}
+                            />
                         <CardContent>
                             <Typography variant="h5" component="div">
                                 Lilly Quinn
@@ -103,10 +114,13 @@ export default function Home() {
                                 82% Match
                             </Typography>
                         </CardContent>
+                        </Box>
                         <CardActions>
                             <Button size="small">Message Now</Button>
                         </CardActions>
                     </Card>
+                    <Typography> Continue your conversations:</Typography>
+                    <Typography> Last message with Sophia:</Typography>
 
 
                 </Grid>
