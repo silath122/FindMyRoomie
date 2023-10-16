@@ -1,19 +1,7 @@
 import "../styling/Navbar.css";
 import {Link } from "react-router-dom";
-<<<<<<< HEAD
-export default function Navbar(){
-    return (
-    
-            <nav className="nav">
-                <a href= "/home"><img src={require("../pictures/FindMyRoomieLogo.png")} alt="FindMyRoomie" class="logo"/></a>
-                <ul>
-                    <Link to="/settings"><button>
-                        Settings
-                    </button></Link>
-=======
 import Button from "react-bootstrap/Button";
 import Typography from "@mui/material/Typography";
-
 export default function Navbar(){
 
     return (
@@ -26,7 +14,6 @@ export default function Navbar(){
                         <Typography sx={{align: 'center', paddingTop:'5px'}}> Settings</Typography>
 
                     </Link>
->>>>>>> color-scheme
             
                 </ul>
 
