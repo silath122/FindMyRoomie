@@ -14,7 +14,10 @@
     background-color:  #425BBD;
     padding: 30px;
 }
-
+.login__container img{
+    align-self: center;
+    height: 30%;
+}
 .login__textBox {
     padding: 10px;
     font-size: 18px;
