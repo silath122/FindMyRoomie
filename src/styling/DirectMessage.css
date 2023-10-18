@@ -14,7 +14,7 @@
             height: 80%;
             display: flex;
             overflow: hidden;
-            
+
             .messageNav{
                 flex: 1;
                 background-color: #2a3a78;
@@ -27,7 +27,7 @@
                         color: white;
                         cursor: pointer;
                         .userChatInfo span{
-                            font-size: 18px; 
+                            font-size: 18px;
                             font-weight: normal;
                         }
                         .userChatInfo p{
@@ -36,24 +36,24 @@
                         &:hover{
                             background-color: #34468a;
                         }
-                        
+
                     }
-                    
-                    
-                    
+
+
+
                     .userChat img{
                         width: 50px;
                         height: 50px;
                         border-radius: 50%;
                         object-fit: cover;
-                        
+
                     }
                 }
-                
-                
+
+
                 .search{
                     border-bottom: 1px solid black;
-                    
+
                     .userChat{
                         padding: 10px;
                         display: flex;
@@ -64,23 +64,23 @@
                         .userChatInfo{
                             span{font-size: 1px; font-weight: normal;}
                             p{font-size: 1px; color: lightgrey;}
-                            
+
                         }
                         &:hover{
                             background-color: #34468a;
                         }
-                        
+
                     }
-                    
+
                     .userChat img{
                         width: 50px;
                         height: 50px;
                         border-radius: 50%;
                         object-fit: cover;
-                        
+
                     }
                     .searchForm{
-                        padding: 10px; 
+                        padding: 10px;
                         outline: none;
                         border-bottom: 1px solid black;
                     }
@@ -91,11 +91,11 @@
                         color: white;
                         outline: none;
                         &::placeholder{
-                            color: rgb(219, 219, 251);   
+                            color: rgb(219, 219, 251);
                         }
-                        
+
                     }
-                    
+
                 }
             }
             .chat{
@@ -113,7 +113,7 @@
                 }
                 .messages{
                     background-color: #D9DEF2;
-                    padding: 10px;  
+                    padding: 10px;
                     height: calc(100% - 160px);
                     overflow-y: scroll;
                     overflow-x: hidden;
@@ -164,7 +164,7 @@
                             color: white;
                             border-radius: 10px 0px 10px 10px;
                         }
-                        
+
                     }
                 }
                 .input{
@@ -174,7 +174,7 @@
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                    
+
                     .send{
                         display: flex;
                         align-items: center;
@@ -190,7 +190,7 @@
                     &::placeholder{
                         color: grey;
                     }
-                } 
+                }
                 .input img{
                     height: 24px;
                     cursor: pointer;
@@ -211,6 +211,6 @@
                 }
             }
         }
-        
+
     }
 }

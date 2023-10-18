@@ -3,7 +3,7 @@
     left: 0;
     top: 0;
     height: 100%;
-    width: 200px;
+    width: 150px;
     background-color: #82BBD3;
     color: white;
     padding: 20px;
@@ -24,7 +24,7 @@ a {
     text-decoration: none;
     color: black;
     font-size: 10px; /* Increase font size for bigger buttons */
-    padding: 10px 20px; /* Add padding to make buttons bigger */
+    padding: 30px 20px; /* Add padding to make buttons bigger */
     border-radius: 5px; /* Add rounded corners for a button-like appearance */
     background-color: #d9def2; /* Change button background color */
     display: block; /* Make links behave like block-level elements */

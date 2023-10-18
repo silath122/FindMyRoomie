@@ -3,7 +3,7 @@ import Sidebar from "../Sidebar";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import Breadcrumbs from "../Breadcrumbs";
 import Grid from "@mui/material/Grid";
-import {Card,CardActions, CardContent, CardMedia, Typography, Button, Box
+import {Card,CardActions, CardContent, CardMedia, Typography, Button, Box, Accordion
 } from "@mui/material";
 import Navbar from "../components/Navbar"
 import {registerWithEmailAndPassword} from "../firebase";
@@ -37,7 +37,7 @@ export default function Matches() {
                     <div>
                         <Typography sx={{ fontFamily: 'Segoe UI Symbol',fontSize:'30px', paddingLeft: '115px'}}> Your Matches</Typography>
                     </div>
-                    <Card sx={{ width: 800, Height: 50, alignItem: 'right',  marginTop: '5px'  }}>
+                    <Card backgroundColor= '#d9def2' sx={{ width: 800, Height: 50, alignItem: 'right',  marginTop: '5px'  }}>
                         <Box display="flex" >
                         <CardMedia
                             component="img"

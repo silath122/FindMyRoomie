@@ -19,6 +19,7 @@ import Settings from "./pages/Settings";
 import FrontPage from "./pages/FrontPage";
 import {useContext} from "react";
 import {AuthContext} from "./context/AuthContext";
+import LoadingPage from "./pages/LoadingPage" ;
 function App() {
     //new comment
     const {currentUser} = useContext(AuthContext);
@@ -48,6 +49,7 @@ function App() {
                     <Route exact path="/messages" element={<ProtectedRoute><DirectMessage /></ProtectedRoute>} />
                     <Route exact path="/settings" element={<ProtectedRoute><Settings/></ProtectedRoute>} />
                     <Route exact path="/matches" element={<ProtectedRoute><Matches/></ProtectedRoute>} />
+                    <Route exact path="/loading" element={<ProtectedRoute><LoadingPage/></ProtectedRoute>} />
                     <Route path="*" element={<NoPage/>}/>
                 </Routes>
             </Router>

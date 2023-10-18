@@ -38,6 +38,9 @@ function Login() {
                     className="logo"
                     sx={{ align: 'center', marginLeft: '10px' }}
                 />
+                <Typography color= 'white' fontSize='20px' sx ={{paddingBottom:'10px'}}>
+                    Login to FindMyRoomie
+                </Typography>
                 <input
                     type="text"
                     className="login__textBox"
@@ -63,7 +66,9 @@ function Login() {
 
                 </button>
                 <div>
-                    Don't have an account? <Link to="/register" className="register__button">Register now</Link>
+                    <Typography color="white">
+                    Don't have an account?
+                    </Typography><Link to="/register" className="register__button">Register now</Link>
                 </div>
             </div>
         </div>

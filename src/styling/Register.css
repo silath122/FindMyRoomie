@@ -1,12 +1,13 @@
 .register {
-    padding: 30px;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-image: linear-gradient(to bottom right, #82BBD3, #D9DEF2);
 }
 
 .register__container {
-
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -23,18 +24,16 @@
 .register__btn {
     padding: 10px;
     font-size: 18px;
-
     border: none;
     color: white;
     background-color:  #82BBD3;
     margin-top: 10px;
-    width: 250px;
-    align-self: center;
+
 }
 
 .register__google {
     background-color:   #d9def2;
-    width: 250px;
+
 }
 
 .register div {

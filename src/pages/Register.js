@@ -53,6 +53,9 @@ function Register() {
                 className="logo"
                 sx={{ align: 'center', marginLeft: '10px' }}
             />
+            <Typography color= 'white' fontSize='20px' sx ={{paddingBottom:'10px'}}>
+                Register for FindMyRoomie
+            </Typography>
             <div className="text1">
                 <input
                     type="text"
@@ -91,7 +94,9 @@ function Register() {
                 </button>
 
                 <div>
-                    Already have an account? <Link to="/" className="login__tab">Login now</Link>
+                    <Typography color="white">
+                    Already have an account?
+                    </Typography><Link to="/" className="login__tab">Login now</Link>
                 </div>
 
         </div>
