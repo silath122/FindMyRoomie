@@ -23,6 +23,7 @@
     "react-scripts": "^5.0.1",
     "survey-core": "^1.9.112",
     "survey-react-ui": "^1.9.112",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

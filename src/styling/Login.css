@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-image: linear-gradient(to bottom right, #82BBD3, #D9DEF2);
 }
 
 .login__container {
