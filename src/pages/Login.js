@@ -11,9 +11,21 @@ function Login() {
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
 
+    const handleLogin = async () => {
+        try {
+            await logInWithEmailAndPassword(email, password);
+            // Redirect to the home page after a successful login
+            if(logInWithEmailAndPassword(email,password)){
+                navigate("/home")
+            };
+        } catch (error) {
+            // Handle login error
+            console.error("Login failed: ", error);
+        }
+    }
+
     useEffect(() => {
 
-        if (user) navigate("/survey");
     }, [user, loading, navigate]);
 
     return (

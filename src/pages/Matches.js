@@ -1,13 +1,20 @@
 import React from "react";
 import Sidebar from "../Sidebar";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import Breadcrumbs from "../Breadcrumbs";
 import Grid from "@mui/material/Grid";
 import {Card,CardActions, CardContent, CardMedia, Typography, Button, Box
 } from "@mui/material";
 import Navbar from "../components/Navbar"
+import {registerWithEmailAndPassword} from "../firebase";
 
 export default function Matches() {
+    const navigate = useNavigate();
+
+    const message = () => {
+
+        navigate ("/DM");
+    };
     return (
         <div>
             <Navbar   maxWidth="lg"/>
@@ -19,8 +26,16 @@ export default function Matches() {
                 </Grid>
                 <Grid item xs={8}
                       alignItems="center" >
+                    <Box align= 'center' style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'column', // Center items vertically
+                        gap: '10px',
+
+                    }}>
                     <div>
-                        <Typography sx={{ fontFamily: 'Segoe UI Symbol',fontSize:'20px', textAlign:'center'}}> your matches</Typography>
+                        <Typography sx={{ fontFamily: 'Segoe UI Symbol',fontSize:'30px', paddingLeft: '115px'}}> Your Matches</Typography>
                     </div>
                     <Card sx={{ width: 800, Height: 50, alignItem: 'right',  marginTop: '5px'  }}>
                         <Box display="flex" >
@@ -46,7 +61,7 @@ export default function Matches() {
                         </CardContent>
                         </Box>
                         <CardActions>
-                            <Button size="small">Message Now</Button>
+                            <Button size="small" onClick={message}>Message Now</Button>
                         </CardActions>
                     </Card>
                     <Card sx={{ width: 800, Height: 50, align: 'center',  marginTop: '10px'  }}>
@@ -75,7 +90,7 @@ export default function Matches() {
                         </CardContent>
                         </Box>
                         <CardActions>
-                            <Button size="small">Message Now</Button>
+                            <Button size="small" onClick={message}>Message Now</Button>
                         </CardActions>
                     </Card>
                     <Card sx={{ width: 800, Height: 50, align: 'center', marginTop: '10px' }}>
@@ -105,7 +120,7 @@ export default function Matches() {
                         </CardContent>
                         </Box>
                         <CardActions>
-                            <Button size="small">Message Now</Button>
+                            <Button size="small" onClick={message}>Message Now</Button>
                         </CardActions>
                     </Card>
                     <Card sx={{ width: 800, Height: 50, align: 'center', marginTop: '15px'  }}>
@@ -135,9 +150,10 @@ export default function Matches() {
                         </CardContent>
                         </Box>
                         <CardActions>
-                            <Button size="small">Message Now</Button>
+                            <Button size="small" onClick={message}>Message Now</Button>
                         </CardActions>
                     </Card>
+                    </Box>
                 </Grid>
             </Grid>
         </div>

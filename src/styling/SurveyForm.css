@@ -1,7 +1,7 @@
-body {
-    background-color: #f0f0f0;
-}
 
+.sv-root-modern .sv-question__title {
+    background-color: yellow;
+}
 .sv_complete_btn {
     background-color: #425BBD; /* Change to the desired background color */
     color: #fff; /* Change to the desired text color */
@@ -15,6 +15,22 @@ body {
 
 /* Style the button on hover (optional) */
 .sv_complete_btn:hover {
-    background-color: #0056b3; /* Change to a different color on hover */
-    /* Add more hover styles if desired */
+    background-color: #0056b3;
+}
+
+body {
+    /* SurveyJS Creator V2 */
+    --primary: #425BBD;
+    --primary-light: #fffff;
+    --foreground:  #4d4d4d; /*font color */
+    --primary-foreground: rgba(26, 183, 250, 0.1);
+    --secondary: #82BBD3;
+    --background: #ffffff;
+    --background-dim-light: #d9def2; /* text box */
+    --hover-color: #ff0000
+}
+.sv-question__title {
+    background-color: #425BBD; /* Change the background color */
+    color: #fff; /* Change the text color */
+    font-weight: bold; /* Make the text bold for better visibility */
 }

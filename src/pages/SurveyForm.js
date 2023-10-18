@@ -2,33 +2,41 @@ import React, {useCallback, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
 import "survey-core/defaultV2.min.css";
-import { Model } from "survey-core";
+import { Model, StylesManager } from "survey-core";
 import { Survey } from "survey-react-ui";
 import '../styling/SurveyForm.css'
 import "survey-core/survey.css";
 import Navbar from "../components/Navbar"
 import Typography from "@mui/material/Typography";
+import Loading from "../pages/LoadingPage"
+
+
 const surveyJson = {
     elements: [
         {
             name: "FirstName",
             title: "Enter your first and last name:",
-            type: "text"
+            type: "text",
+            isRequired: "true",
+
         },
         {
             age: "age",
             title: "Enter your age:",
-            type: "text"
+            type: "text",
+            isRequired: "true",
         },
         {
             bio: "bio",
             title: "Tell us about yourself",
-            type: "text"
+            type: "text",
+            isRequired: "true",
         },
         {
             year: "year",
             title: "What school year are you",
             type: "dropdown",
+            isRequired: "true",
             "choices": [{
                 "value": "freshman",
                 "text": "Freshman"
@@ -47,6 +55,7 @@ const surveyJson = {
             studyHours: "year",
             title: "How much do you like to study daily?",
             type: "dropdown",
+            isRequired: "true",
             "choices": [{
                 "value": "0-1",
                 "text": "0-1 hours"
@@ -65,6 +74,7 @@ const surveyJson = {
             sleep: "sleep",
             title: "What time do you typically go to sleep?",
             type: "dropdown",
+            isRequired: "true",
             "choices": [{
                 "value": "before 10",
                 "text": "before 10"
@@ -83,6 +93,7 @@ const surveyJson = {
             wakeUp: "wakeUp",
             title: "What time do you typically wake up?",
             type: "dropdown",
+            isRequired: "true",
             "choices": [{
                 "value": "before 6",
                 "text": "before 6"
@@ -133,6 +144,7 @@ const surveyJson = {
             workAmount: "work-amount",
             title: "How much do you work a week?",
             type: "dropdown",
+            isRequired: "true",
             "choices": [{
                 "value": "dont",
                 "text": "I don't work"
@@ -154,6 +166,7 @@ const surveyJson = {
             numberRoommates: "number-of-roommates",
             title: "How many roommates would you like to live with?",
             type: "dropdown",
+            isRequired: "true",
             "choices": [{
                 "value": "1",
                 "text": "1"
@@ -168,6 +181,12 @@ const surveyJson = {
                 "text": "4 or more"
             }]
         },
+        {
+            name: "submit",
+            title: "Submit",
+            type: "button",
+            cssClass: "custom-submit-button", // Add this class
+        }
     ]
 };
 
@@ -194,15 +213,15 @@ function SurveyForm() {
 
 
     const survey = new Model(surveyJson);
+
     survey.focusFirstQuestionAutomatic = false;
 
-    const alertResults = useCallback((sender) => {
-        const results = JSON.stringify(sender.data);
-        alert(results);
-    }, []);
 
-    survey.onComplete.add(alertResults);
 
+    const handleSurveyComplete = () => {
+
+        navigate('/Loading');
+    };
 
 
     return (
@@ -210,7 +229,7 @@ function SurveyForm() {
             <div style={{ backgroundColor: '#f0f0f0' }}>
                 <Navbar/>
                 <Typography variant="h6" align='center' sx={{display:'flex-start', paddingTop:'10px', paddingLeft: '10px' }}>Please complete the survey before continuing:</Typography>
-                <Survey model={survey} />
+                <Survey model={survey}  onComplete={handleSurveyComplete}/>
             </div>
 
     );

@@ -47,6 +47,7 @@ function App() {
                     <Route exact path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route exact path="/messages" element={<ProtectedRoute><DirectMessage /></ProtectedRoute>} />
                     <Route exact path="/settings" element={<ProtectedRoute><Settings/></ProtectedRoute>} />
+                    <Route exact path="/matches" element={<ProtectedRoute><Matches/></ProtectedRoute>} />
                     <Route path="*" element={<NoPage/>}/>
                 </Routes>
             </Router>

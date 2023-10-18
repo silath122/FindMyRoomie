@@ -7,7 +7,7 @@
     "@emotion/styled": "^11.11.0",
     "@firebase/firestore": "^4.2.0",
     "@mui/icons-material": "^5.14.12",
-    "@mui/material": "^5.14.13",
+    "@mui/material": "^5.14.14",
     "@mui/system": "^5.14.13",
     "@react-navigation/native-stack": "^6.9.14",
     "@testing-library/jest-dom": "^5.17.0",
@@ -18,8 +18,8 @@
     "react-bootstrap": "^2.9.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
+    "react-loader-spinner": "^5.4.5",
     "react-native": "^0.72.5",
-    "react-router-dom": "^6.16.0",
     "react-scripts": "^5.0.1",
     "survey-core": "^1.9.113",
     "survey-react-ui": "^1.9.112",
@@ -49,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-router-dom": "^6.17.0"
   }
 }
