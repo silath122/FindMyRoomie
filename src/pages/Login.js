@@ -32,12 +32,14 @@ function Login() {
         <div className="login">
 
             <div className="login__container">
+                <div className="login__logo">
                 <img
                     src={require("../pictures/FindMyRoomieLogo.png")}
                     alt="FindMyRoomie"
                     className="logo"
-                    sx={{ align: 'center', marginLeft: '10px' }}
+
                 />
+                </div>
                 <Typography color= 'white' fontSize='20px' sx ={{paddingBottom:'10px'}}>
                     Login to FindMyRoomie
                 </Typography>

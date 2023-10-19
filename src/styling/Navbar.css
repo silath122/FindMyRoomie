@@ -7,7 +7,7 @@
     width: 100%;
     justify-content: space-between;
     align-items: stretch;
-    gap: 0 1rem;
+
 
 
 }
@@ -38,12 +38,12 @@
     color: white;
     border: 1px solid white;
 }
+
 .logo{
 
     height: auto;
-
     height: 60px;
-
+    align-self: center;
     width: 10rem;
 }
 
@@ -78,6 +78,9 @@
     margin:0;
     padding-top: 10px;
 
+}
+b{
+    padding-top: 10px;
 }
 
 

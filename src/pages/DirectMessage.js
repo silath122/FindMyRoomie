@@ -16,7 +16,7 @@ function DirectMessage() {
                     <Sidebar/>
 
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={8}>
                     <div className="pageContainer">
                         <div className="container">
 
