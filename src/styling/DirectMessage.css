@@ -1,8 +1,8 @@
 .DirectMessagePage{
-    height:100vh;
+    height:89vh;
     .pageContainer{
-        background-color: white;
-        height: calc(100vh - 80px);
+
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -11,8 +11,7 @@
             border: 2px solid black;
             border-radius: 10px;
             width: 100%;
-            height: 100%;
-            
+            height: 90%;
             display: flex;
             overflow: hidden;
 
@@ -101,7 +100,6 @@
             }
             .chat{
                 flex: 5;
-                
                 .chatInfo{
                     height: 50px;
                     background-color: #425BBD;
@@ -114,15 +112,12 @@
                     color: White;
                 }
                 .messages{
-                    
                     background-color: #D9DEF2;
                     padding: 10px;
                     height: calc(100% - 160px);
                     overflow-y: scroll;
                     overflow-x: hidden;
-                    scroll-snap-type: y;
                     .message{
-                        
                         display: flex;
                         gap: 10px;
                         margin-bottom: 5px;

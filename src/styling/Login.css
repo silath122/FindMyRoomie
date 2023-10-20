@@ -37,7 +37,13 @@
     background-color: #d9def2;
 
 }
+.logo{
 
+    height: auto;
+    height: 60px;
+    align-self: center;
+    width: 10rem;
+}
 .login div {
     margin-top: 7px;
 }

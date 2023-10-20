@@ -36,7 +36,7 @@ function Login() {
                     src={require("../pictures/FindMyRoomieLogo.png")}
                     alt="FindMyRoomie"
                     className="logo"
-                    
+                    sx={{ align: 'center', marginLeft: '10px' }}
                 />
                 <Typography color= 'white' fontSize='20px' sx ={{paddingBottom:'10px'}}>
                     Login to FindMyRoomie
