@@ -6,24 +6,37 @@
     height: 75px;
     width: 100%;
     justify-content: space-between;
-    align-items: stretch;
+    align-items: center;
     gap: 0 1rem;
-
-
 }
-
+.nav .logo-link{
+    width: 150px;
+    height: 75px;
+    padding: 0px;
+    margin-left: 10px;
+    background-color: transparent;
+}
+.nav .logo-link .logo{
+    width: 200px;
+    height: 100px;
+    
+    
+}
 .nav ul{
     padding: 0;
     margin: 0;
     list-style: none;
-
     display: flex;
-    display: flex;
-    gap: 1rem
-
-
-
+    gap: 1rem;
 }
+.logo{
+    height: auto;
+    width: 10rem;
+    max-height: 100%;
+    max-width: 100%;
+    margin-right: 10px;
+}
+
 .nav button{
     padding: 10px 20px;
     font-size: 14px;
