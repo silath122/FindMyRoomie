@@ -12,7 +12,7 @@ export default function Navbar(){
                    sx = {{paddingTop:'5px'}}>
                     <img sx={{paddingTop:'-5px'}}
                          src={require("../pictures/FindMyRoomieLogo.png")}
-                         alt="FindMyRoomie" class="logo"/>
+                         alt="FindMyRoomie" className="logo"/>
                 </a>
                 <Typography
                     className="title"
@@ -20,12 +20,8 @@ export default function Navbar(){
                     Find My Roomie
                 </Typography>
                 <ul>
-                    <button onClick={()=>logout()}>Logout</button>
-                    <Link to="/settings">
-                        <Typography sx={{align: 'center', paddingTop:'5px'}}> Settings</Typography>
+                    <button className="logout-btn" onClick={()=>logout()}>Logout</button>
 
-                    </Link>
-            
                 </ul>
 
             </nav>

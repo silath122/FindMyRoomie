@@ -19,32 +19,39 @@ import {
 import {Col} from "react-bootstrap";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth, firestore} from "../firebase";
-import {collection, getDocs, query, where} from "firebase/firestore";
+import {collection, getDocs, query, where,} from "firebase/firestore";
 import Navbar from "../components/Navbar";
 
 
 export default function Home() {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
+    const [fn, sfn] =useState("");
 
 
     const fetchUserName = async () => {
         try {
             const q = query(collection(firestore, "users"), where("uid", "==", user?.uid));
+            console.log("query= ", q);
             const doc = await getDocs(q);
             const data = doc.docs[0].data();
+            console.log("data ", data);
 
             setName(data.name);
         } catch (err) {
             console.error(err);
-            alert("An error occured while fetching user data");
         }
     };
+
+
+
+
 
     useEffect(() => {
 
 
         fetchUserName();
+
     }, [user, loading, ]);
     return (
         <div>
@@ -56,10 +63,31 @@ export default function Home() {
 
                 </Grid>
                 <Grid item xs={8}>
-                    <Typography variant="h6" align='center' sx={{paddingTop: '15px'}}>
-                        Welcome Back, {name}
-                    </Typography>
+                    <Box align= 'center' style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'column', // Center items vertically
+                        gap: '10px',
+
+                    }}>
+                    <Typography variant="h6"  sx={{paddingTop: '15px', paddingLeft: '65px'}}>
+                        Welcome Back, {name}                    </Typography>
+                    </Box>
+                        <Box style={{
+                            alignItems: 'left',
+                            paddingLeft: '110px'
+                        }}>
                         <div>Top Matches: </div>
+                        </Box>
+                    <Box align= 'center' style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'column', // Center items vertically
+                        gap: '10px',
+
+                    }}>
                     <Card sx={{ width: 800, Height: 50, align: 'center', marginTop: '10px' }}>
                         <Box display="flex" >
                             <CardMedia
@@ -119,8 +147,13 @@ export default function Home() {
                             <Button size="small">Message Now</Button>
                         </CardActions>
                     </Card>
-                    <Typography> Continue your conversations:</Typography>
-                    <Typography> Last message with Sophia:</Typography>
+                    </Box>
+                    <Box style={{
+                        alignItems: 'left',
+                        paddingLeft: '110px',
+                        paddingTop: '20px'
+                    }}>
+                    </Box>
 
 
                 </Grid>

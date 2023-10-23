@@ -34,7 +34,7 @@ function Register() {
             if (userData.exists) {
                 const surveyFilled = userData.data().surveyFilled;
                 if (surveyFilled) {
-                    navigate("/dashboard");
+                    navigate("/survey");
                 }
             }
         };
@@ -94,7 +94,7 @@ function Register() {
                 </button>
 
                 <div>
-                    <Typography color="white">
+                    <Typography color="white" sx={{marginBottom: '10px'}}>
                     Already have an account?
                     </Typography><Link to="/" className="login__tab">Login now</Link>
                 </div>

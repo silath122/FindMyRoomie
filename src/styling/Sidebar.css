@@ -20,7 +20,7 @@ li {
     margin-bottom: 10px;
 }
 
-a {
+.sidebar-buttons{
     text-decoration: none;
     color: black;
     font-size: 10px; /* Increase font size for bigger buttons */

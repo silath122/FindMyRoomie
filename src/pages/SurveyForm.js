@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
+import {auth, storeSurveyResults} from "../firebase"
 import "survey-core/defaultV2.min.css";
 import { Model, StylesManager } from "survey-core";
 import { Survey } from "survey-react-ui";
@@ -14,26 +14,26 @@ import Loading from "../pages/LoadingPage"
 const surveyJson = {
     elements: [
         {
-            name: "FirstName",
+            name: "fullName",
             title: "Enter your first and last name:",
             type: "text",
             isRequired: "true",
 
         },
         {
-            age: "age",
+            name: "age",
             title: "Enter your age:",
             type: "text",
             isRequired: "true",
         },
         {
-            bio: "bio",
+            name: "bio",
             title: "Tell us about yourself",
             type: "text",
             isRequired: "true",
         },
         {
-            year: "year",
+            name: "year",
             title: "What school year are you",
             type: "dropdown",
             isRequired: "true",
@@ -52,6 +52,7 @@ const surveyJson = {
             }]
         },
         {
+            name: "studyHours",
             studyHours: "year",
             title: "How much do you like to study daily?",
             type: "dropdown",
@@ -60,18 +61,18 @@ const surveyJson = {
                 "value": "0-1",
                 "text": "0-1 hours"
             }, {
-                "value": "2 hours",
-                "text": "2 hours"
+                "value": "2-3 hours",
+                "text": "2-3 hours"
             }, {
-                "value": "3 hours",
-                "text": "3 hours"
+                "value": "3-4 hours",
+                "text": "3-4 hours"
             }, {
                 "value": "4+",
                 "text": "4+ hours"
             }]
         },
         {
-            sleep: "sleep",
+            name: "bedtime",
             title: "What time do you typically go to sleep?",
             type: "dropdown",
             isRequired: "true",
@@ -90,7 +91,7 @@ const surveyJson = {
             }]
         },
         {
-            wakeUp: "wakeUp",
+            name: "wakeUpTime",
             title: "What time do you typically wake up?",
             type: "dropdown",
             isRequired: "true",
@@ -141,7 +142,7 @@ const surveyJson = {
             }]
         },
         {
-            workAmount: "work-amount",
+            name: "work-amount",
             title: "How much do you work a week?",
             type: "dropdown",
             isRequired: "true",
@@ -163,7 +164,7 @@ const surveyJson = {
             }]
         },
         {
-            numberRoommates: "number-of-roommates",
+            name: "number-of-roommates",
             title: "How many roommates would you like to live with?",
             type: "dropdown",
             isRequired: "true",
@@ -219,6 +220,13 @@ function SurveyForm() {
 
 
     const handleSurveyComplete = () => {
+        const surveyData = survey.data;
+        setFormData(surveyData);
+        setFormComplete(true);
+
+        const userId = auth.currentUser.uid;
+
+        storeSurveyResults(userId,surveyData);
 
         navigate('/Loading');
     };

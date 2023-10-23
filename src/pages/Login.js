@@ -1,32 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
+import {auth, firestore, logInWithEmailAndPassword, signInWithGoogle} from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "../styling/Login.css";
 import Typography from "@mui/material/Typography";
+import {collection, doc, getDocs, query, where} from "firebase/firestore";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
-
-    const handleLogin = async () => {
-        try {
-            await logInWithEmailAndPassword(email, password);
-            // Redirect to the home page after a successful login
-            if(logInWithEmailAndPassword(email,password)){
-                navigate("/home")
-            };
-        } catch (error) {
-            // Handle login error
-            console.error("Login failed: ", error);
-        }
-    }
+    const[completedSurvey, setCompletedSurvey]=useState("");
 
     useEffect(() => {
 
+        if (user) navigate("/survey");
     }, [user, loading, navigate]);
+
+
+
+
 
     return (
         <div className="login">
@@ -66,9 +60,8 @@ function Login() {
 
                 </button>
                 <div>
-                    <Typography color="white">
-                    Don't have an account?
-                    </Typography><Link to="/register" className="register__button">Register now</Link>
+                    <Typography color= 'white'  fontSize='15px' sx ={{paddingBottom:'10px'}}>   Don't have an account?</Typography>
+                   <Link to="/register" className="register__button">Register now</Link>
                 </div>
             </div>
         </div>

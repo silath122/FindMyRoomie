@@ -17,6 +17,7 @@ import {
     sendPasswordResetEmail,
     signOut} from "firebase/auth";
 import {useNavigation} from "react-router-dom";
+import {doc, updateDoc} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,6 +25,7 @@ import {useNavigation} from "react-router-dom";
 const firebaseConfig = {
     apiKey: "AIzaSyAdVvP6M7tG2mwOO1SiKyh7eQO2M2vYDSY",
     authDomain: "findmyroomie-1c447.firebaseapp.com",
+    databaseURL: "https://findmyroomie-1c447-default-rtdb.firebaseio.com",
     projectId: "findmyroomie-1c447",
     storageBucket: "findmyroomie-1c447.appspot.com",
     messagingSenderId: "338332794962",
@@ -32,6 +34,7 @@ const firebaseConfig = {
 const googleProvider = new GoogleAuthProvider();
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
 const firestore = getFirestore(app);
 
 const signInWithGoogle = async () => {
@@ -49,6 +52,7 @@ const signInWithGoogle = async () => {
                     email: user.email,
                 });
         }
+
     }catch(err){
         console.error(err);
         alert(err.message);
@@ -73,6 +77,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
             name,
             authProvider: "local",
             email,
+            completedSurvey: false,
         });
     } catch (err) {
         console.error(err);
@@ -90,6 +95,23 @@ const sendPasswordReset = async (email) => {
     }
 };
 
+const storeSurveyResults = async (userId, surveyData) => {
+    try{
+        await addDoc(collection(firestore, "surveys"), {
+            userId,
+            surveyData,
+            timestamp: new Date()
+        });
+        const userRef = doc(firestore, "users", userId);
+        await updateDoc(userRef, {
+            completedSurvey: true,
+        });
+    }catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
+}
+
 const logout = () => {
     signOut(auth);
 };
@@ -101,6 +123,7 @@ export {
     logInWithEmailAndPassword,
     registerWithEmailAndPassword,
     sendPasswordReset,
+    storeSurveyResults,
     logout,
 };
 

@@ -13,7 +13,7 @@ export default function Matches() {
 
     const message = () => {
 
-        navigate ("/DM");
+        navigate ("/messages");
     };
     return (
         <div>

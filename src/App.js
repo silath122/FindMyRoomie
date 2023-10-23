@@ -43,8 +43,7 @@ function App() {
                     <Route exact path="/register" element={<Register />} />
                     <Route exact path="/reset" element={<Reset />} />
                     <Route path ="/survey" element={<ProtectedRoute><SurveyForm/></ProtectedRoute>}/>
-                    <Route exact path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                    <Route exact path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>}/>
+                     <Route exact path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>}/>
                     <Route exact path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route exact path="/messages" element={<ProtectedRoute><DirectMessage /></ProtectedRoute>} />
                     <Route exact path="/settings" element={<ProtectedRoute><Settings/></ProtectedRoute>} />

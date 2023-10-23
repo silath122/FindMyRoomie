@@ -14,7 +14,10 @@
     background-color:  #425BBD;
     padding: 30px;
 }
-
+.register__container img{
+    align-self: center;
+    height: 30%;
+}
 .register__textBox {
     padding: 10px;
     font-size: 18px;
@@ -55,7 +58,7 @@
     border: none;
     color: white;
     background-color:  #82BBD3;
-    margin-top: 10px;
+    margin-top: 0px;
     width: 210px;
     align-items: center;
 
