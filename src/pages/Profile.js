@@ -1,27 +1,58 @@
+import "../styling/Profile.css"
 import React from "react";
-import Sidebar from "../Sidebar";
-import {Route, Routes} from "react-router-dom";
-import Breadcrumbs from "../Breadcrumbs";
+import Navbar from "../components/Navbar";
 import Grid from "@mui/material/Grid";
+import Sidebar from "../Sidebar";
+function yourProfile(){
+    return(
+        // upload and delete image function
+        // connect to survey and show results, as well as allow editing of survey answers
+        <div class = "yourProfile">
+            <Navbar/>
+
+                <Grid container spacing={2}>
+                    <Grid item xs={2}>
+
+                        <Sidebar/>
+
+                    </Grid>
+                    <Grid item xs={8}
+                          alignItems="center" >
+                        <div className='flex-container'>
+
+                <div class = 'flex-item'>
+                    <p>
+                        Lorum ipsum
+                    </p>
+                    <p>
+                        Lorum ipsum
+                    </p>
+                    <p>
+                        Lorum ipsum
+                    </p>
+                </div>
+
+                <div class = 'flex-item'>
+                    <p>
+                        <button>
+                            update Photos button
+                        </button>
+                    </p>
+                    <p>
+                        <button>
+                            update roommate preferences
+                        </button>
+                    </p>
+                </div>
 
 
-export default function Profile() {
-    return (
-        <div>
-            <Grid container spacing={2}>
-                <Grid item xs={2}>
 
-                    <Sidebar/>
 
+            </div>
+                    </Grid>
                 </Grid>
-                <Grid item xs={8}>
-                    <div>
-
-                        <div> Profile page</div>
-
-                    </div>
-                </Grid>
-            </Grid>
         </div>
-    );
+
+    )
 }
+export default yourProfile;

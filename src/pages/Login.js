@@ -15,11 +15,24 @@ function Login() {
 
     useEffect(() => {
 
-        if (user) navigate("/survey");
+
+        if (user) {
+
+            navigate("/survey");
+        }
     }, [user, loading, navigate]);
 
 
-
+    // const isSurveyComplete = async() => {
+    //     const q = query(collection(firestore, "users"), where("completedSurvey", "==", user?.completedSurvey));
+    //     console.log("query= ", q);
+    //     const doc =  getDocs(q);
+    //     const data = doc.docs[0].data();
+    //     console.log("data ", data);
+    //     console.log("is survey complete: ", user.completedSurvey);
+    //
+    //
+    // }
 
 
     return (
