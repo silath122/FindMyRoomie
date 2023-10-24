@@ -18,17 +18,35 @@ function yourProfile(){
                     </Grid>
                     <Grid item xs={8}
                           alignItems="center" >
-                        <div className='flex-container'>
+            <div className='flex-container'>
 
-                <div class = 'flex-item'>
+                <div class = 'flex-survey'>
                     <p>
-                        Lorum ipsum
+                        Age:
                     </p>
                     <p>
-                        Lorum ipsum
+                        Study Hours:
                     </p>
                     <p>
-                        Lorum ipsum
+                        Typically go to sleep at:
+                    </p>
+                    <p>
+                        Typically Wake up at:
+                    </p>
+                    <p>
+                        Extroverted:
+                    </p>
+                    <p>
+                        Friendship with roommates:
+                    </p>
+                    <p>
+                        Cleanliness::
+                    </p>
+                    <p>
+                        Hours worked:
+                    </p>
+                    <p>
+                        Number of roommates:
                     </p>
                 </div>
 
@@ -42,6 +60,20 @@ function yourProfile(){
                         <button>
                             update roommate preferences
                         </button>
+                    </p>
+                </div>
+                <div class = 'flex-user'>
+                    <p>
+                        Alexa Padberg
+                    </p>
+                    <p>
+                        padberga@g.cofc.edu
+                    </p>
+                     <p>
+                        Senior Year
+                    </p>
+                    <p>
+                        College of Charleston
                     </p>
                 </div>
 
