@@ -2,12 +2,14 @@
 
 .yourProfile
 {
+
     text-align:center;
     justify-content: center;
 
 }
 
 .flex-btn {
+
     display: flex;
     align-item: center;
     justify-content: center;
@@ -20,19 +22,26 @@
     background-color: black;
 }
 
+
+
 .flex-container
 {
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
     background-color:  #82BBD3;
 
+}
+.flex-user img{
+    align-self: center;
+    height: 26%;
 }
 .flex-survey
 {
 
     align-item: center;
     justify-content: center;
-    background-color: #f1f1f1;
+    background-color: #ffffff;
     width: 500px;
     height: 600px;
     margin: 10px;
@@ -45,7 +54,7 @@
 
     align-item: center;
     justify-content: center;
-    background-color: #f1f1f1;
+    background-color: #ffffff;
     width: 500px;
     height: 600px;
     margin: 10px;
@@ -58,7 +67,7 @@
 
     align-item: center;
     justify-content: center;
-    background-color: #f1f1f1;
+    background-color: #ffffff;
     width: 500px;
     height: 600px;
     margin: 10px;

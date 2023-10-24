@@ -27,6 +27,13 @@ const surveyJson = {
             isRequired: "true",
         },
         {
+            name: "collegeName",
+            title: "What college do you attend?",
+            type: "text",
+            isRequired: "true",
+
+        },
+        {
             name: "bio",
             title: "Tell us about yourself",
             type: "text",
