@@ -230,11 +230,11 @@ function SurveyForm() {
         const surveyData = survey.data;
         setFormData(surveyData);
         setFormComplete(true);
-
+    
         const userId = auth.currentUser.uid;
-
-        storeSurveyResults(userId,surveyData);
-
+    
+        storeSurveyResults(userId, surveyData);
+    
         navigate('/Loading');
     };
 

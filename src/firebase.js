@@ -97,12 +97,14 @@ const sendPasswordReset = async (email) => {
 
 const storeSurveyResults = async (uid, survey) => {
     try {
-        // Assuming you have a "users" collection and you want to add survey data as a subcollection
+        // Create a reference to the user document
         const userRef = doc(firestore, "users", uid);
+
+        // Update the user document with the survey data
         await setDoc(userRef, {
             survey: survey,
             completedSurvey: true,
-        });
+        }, { merge: true }); // Use merge: true to update the user document without overwriting other fields
     } catch (err) {
         console.error(err);
         alert(err.message);
