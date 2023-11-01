@@ -17,7 +17,7 @@ import {
     sendPasswordResetEmail,
     signOut} from "firebase/auth";
 import {useNavigation} from "react-router-dom";
-import {doc, updateDoc} from "firebase/firestore";
+import {doc, updateDoc, setDoc} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -95,6 +95,23 @@ const sendPasswordReset = async (email) => {
     }
 };
 
+const storeSurveyResults = async (uid, survey) => {
+    try {
+        // Assuming you have a "users" collection and you want to add survey data as a subcollection
+        const userRef = doc(firestore, "users", uid);
+        await setDoc(userRef, {
+            survey: survey,
+            completedSurvey: true,
+        });
+    } catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
+};
+
+
+/**
+ * Old code
 const storeSurveyResults = async (userId, surveyData) => {
     try{
         await addDoc(collection(firestore, "surveys"), {
@@ -111,6 +128,7 @@ const storeSurveyResults = async (userId, surveyData) => {
         alert(err.message);
     }
 }
+**/
 
 const logout = () => {
     signOut(auth);
