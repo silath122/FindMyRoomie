@@ -17,7 +17,7 @@ import {
     sendPasswordResetEmail,
     signOut} from "firebase/auth";
 import {useNavigation} from "react-router-dom";
-import {doc, updateDoc} from "firebase/firestore";
+import {doc, updateDoc, setDoc} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -34,8 +34,10 @@ const firebaseConfig = {
 const googleProvider = new GoogleAuthProvider();
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-
 const firestore = getFirestore(app);
+
+// create a reference to "surveys" collection
+const surveysCollection = collection(firestore, "surveys");
 
 const signInWithGoogle = async () => {
     try{
@@ -95,22 +97,74 @@ const sendPasswordReset = async (email) => {
     }
 };
 
-const storeSurveyResults = async (userId, surveyData) => {
-    try{
-        await addDoc(collection(firestore, "surveys"), {
-            userId,
+// const addUserToFirestore = async (user) => {
+//     try {
+//         const q = query(collection(firestore, "users"), where("uid", "==", user.uid));
+//         const docs = await getDocs(q);
+
+//         if (docs.docs.length === 0) {
+//             await addDoc(collection(firestore, "users"), {
+//                 uid: user.uid,
+//                 name: user.displayName,
+//                 authProvider: "google",
+//                 email: user.email,
+//             });
+//             console.log("User added to Firestore.");
+//         } else {
+//             console.log("User already exists in Firestore.");
+//         }
+//     } catch (error) {
+//         console.error("Error adding user to Firestore:", error);
+//         alert("Error adding user to Firestore: " + error.message);
+//     }
+// };
+
+const storeSurveyResults = async (surveyData) => {
+    try {
+        const surveyRef = await addDoc(surveysCollection, {
             surveyData,
-            timestamp: new Date()
+            timestamp: new Date(),
         });
-        const userRef = doc(firestore, "users", userId);
-        await updateDoc(userRef, {
-            completedSurvey: true,
-        });
-    }catch (err) {
+
+        console.log("Survey data saved successfully with ID:", surveyRef.id);
+    } catch (err) {
         console.error(err);
-        alert(err.message);
+        alert("Failed to save survey data. " + err.message);
     }
-}
+};
+
+// const storeSurveyResults = async (userId, surveyData) => {
+//     try {
+//         // Create a reference to the user document
+//         const userRef = doc(firestore, "users", userId);
+
+//         // Update the user document with the survey data
+//         await setDoc(userRef, {
+//             survey: surveyData,
+//             completedSurvey: true,
+//         }, { merge: true }); // Use merge: true to update the user document without overwriting other fields
+//     } catch (err) {
+//         console.error(err);
+//         alert(err.message);
+//     }
+// };
+
+// const storeSurveyResults = async (userId, surveyData) => {
+//     try{
+//         await addDoc(collection(firestore, "surveys"), {
+//             userId,
+//             surveyData,
+//             timestamp: new Date()
+//         });
+//         const userRef = doc(firestore, "users", userId);
+//         await updateDoc(userRef, {
+//             completedSurvey: true,
+//         });
+//     }catch (err) {
+//         console.error(err);
+//         alert(err.message);
+//     }
+// }
 
 const logout = () => {
     signOut(auth);
