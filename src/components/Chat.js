@@ -6,10 +6,11 @@ import {ChatContext} from "../context/ChatContext";
 import {useContext} from "react";
 const Chat = () =>{
     const {data} = useContext(ChatContext);
+    console.log(data)
     return(
         <div className="chat">
-            <div className="chatInfo">Adam
-                {/* <span>{data.user?.name}</span> */}
+            <div className="chatInfo">
+                <span>{JSON.parse(data.user?.displayName)}</span>
             </div>
             <Messages/>
             <Input/>

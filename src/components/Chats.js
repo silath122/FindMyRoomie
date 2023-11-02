@@ -27,6 +27,8 @@ const Chats = () =>{
 
     const handleSelect = (u) =>{
         dispatch({type:"CHANGE_USER", payload:u})
+        console.log("User clicked on ")
+        console.log(u)
     }
 
 
@@ -35,13 +37,6 @@ const Chats = () =>{
         return(
             
             <div className="chats">
-                      <div className="userChat">
-                        <img src={"https://images.pexels.com/photos/5732892/pexels-photo-5732892.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} alt="" />
-                        <div className="userChatInfo">
-                          <span>Adam</span>
-                          <p>hello</p>
-                        </div>
-                        </div>
                 {chats &&
                     Object.entries(chats).map( (chat) => {
                       console.log(chat[1].userInfo.photoURL);
