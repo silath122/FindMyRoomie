@@ -8,7 +8,7 @@ import '../styling/SurveyForm.css'
 import "survey-core/survey.css";
 import Navbar from "../components/Navbar"
 import Typography from "@mui/material/Typography";
-import Loading from "../pages/LoadingPage"
+import Loading from "../pages/LoadingPage";
 
 
 const surveyJson = {
@@ -226,9 +226,21 @@ function SurveyForm() {
         const surveyData = survey.data;
         setFormData(surveyData);
         setFormComplete(true);
+
+        // get the uid
+        const user = auth.currentUser;
+        if (user) {
+            const userId = user.uid;
+            storeSurveyResults(userId, surveyData);
+            navigate('/Loading');
+        }
+        else {
+            // user isn't authenticated
+            console.error('User is not authenticated.');
+        }
     
-        storeSurveyResults(surveyData);
-        navigate('/Loading');
+        //storeSurveyResults(userId, surveyData);
+        //navigate('/Loading');
     };
 
     return (
