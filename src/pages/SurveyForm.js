@@ -206,6 +206,7 @@ function SurveyForm() {
         grade: '',
         major: '',
         bio: '',
+
         cleanliness: 0,
         friendliness: 0,
         studyAmount: 0,
