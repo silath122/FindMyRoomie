@@ -1,14 +1,12 @@
 import "../styling/Profile.css"
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import Navbar from "../components/Navbar";
 import Grid from "@mui/material/Grid";
 import Sidebar from "../Sidebar";
 import {collection, getDocs, query, where} from "firebase/firestore";
-import {auth, firestore} from "../firebase";
+import {firestore} from "../firebase";
 function YourProfile(){
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
     const [age, setAge] = useState("");
     const [bedtime, setBedtime] =useState("");
     const [bio, setBio] =useState("");
@@ -17,81 +15,44 @@ function YourProfile(){
     const [wakeup, setWakeup] =useState("");
     const [workAmount, setWorkAmount] =useState("");
     const [schoolYear, setSchoolYear] =useState("");
-    const [cleanness, setCleanness]= useState(0);
-    const [closeness, setCloseness]= useState(0);
-    const [extroverted, setExtroveted]= useState(0);
-    const [isLoading, setIsLoading] = useState(true); // profile loading state
+    const [cleanness, setCleanness]= useState("");
+    const [closeness, setCloseness]= useState("");
+    const [extroverted, setExtroveted]= useState("");
+    // Initialize Firestore
 
-    //Put Alexa's code here
-    
-    //Siah's code below
-    /**
-     * 10/31/23 Something is wrong with the database.
-     * The users are not linked with the ids of the surveys, so every time the user logs in
-     * they have to refill out the survey
-     * Fix the database, link, and organize everything in order to continue on with this code. 
-     */
-    useEffect(() => {
-        // get the current user
-        const user = auth.currentUser;
+    const userId = "xSZ6mWKv2Tea17OuzU0hiTlNc5U2";
+    // currently hardcoded to Alexas profile, need to figure out how to query
+    // user's id
 
-        if (user) {
-            // If a user is signed in then then get their UID
-            const userId = user.uid;
 
-            // reference to the Firestore collection that contains survey data
-            const surveysCollection = collection(firestore, "surveys");
-            const usersCollection = collection(firestore, "users");
+    //TODO: change to use userSurveys collection inside the users collection.
+    //was calling the surveys collection to be parsed
+    const surveysCollection = collection(firestore, "surveys");
+    console.log("survey collection: ", surveysCollection);
+    //query to retrieve the current users completed survey
+    const q = query(surveysCollection, where('userId', '==', userId));
+    //execute query
+    getDocs(q)
+        .then((querySnapshot) => {
+            //loop through specific users answers and look at "survey data" field
+            querySnapshot.forEach((doc) => {
+                const surveyData = doc.data().surveyData;
 
-            // Query to find survey data for the current user
-            const surveyq = query(surveysCollection, where('userId', '==', userId));
-            const usersq = query(usersCollection, where('userId', '==', userId)) // it's uid not user ID
+               setAge(surveyData.age)
+               setBedtime(surveyData.bedtime)
+               setStudyHours(surveyData.studyHours)
+               setBio(surveyData.bio);
+               setSchoolYear(surveyData.year);
+               setNumberRoommates(surveyData["number-of-roommates"]);
 
-            getDocs(usersq)
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    const surveyData = doc.data().surveyData;
-                    const usersData = doc.data().users;
-                    // set the state as the collected user data
-                    setName(usersData.name);
-                    setEmail(usersData.email);
-                    setBio(surveyData.bio);
-                    setIsLoading(false); // Loading the data is complete
-                });
-              })
-              .catch((error) => {
-                console.error("Error getting survey data:", error);
-                setIsLoading(false); //Loading the data is complete even in case of error
-              });
+               setWakeup(surveyData.wakeUpTime)
+               setWorkAmount(surveyData["work-amount"])
+            });
+        })
+        .catch((error) => {
+            console.error("Error getting survey data:", error);
+        });
 
-            getDocs(surveyq)
-              .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    const surveyData = doc.data().surveyData;
-                    const usersData = doc.data().users;
-                    // set the state as the collected user data
-                    setName(usersData.name);
-                    setEmail(usersData.email);
-                    setAge(surveyData.age);
-                    setBedtime(surveyData.bedtime);
-                    setStudyHours(surveyData.studyHours);
-                    setBio(surveyData.bio);
-                    setSchoolYear(surveyData.year);
-                    setNumberRoommates(surveyData["number-of-roommates"]);
-                    setCleanness(surveyData.qualities.cleanness);
-                    setCloseness(surveyData.qualities.closeness);
-                    setExtroveted(surveyData.qualities.extroverted);
-                    setWakeup(surveyData.wakeUpTime);
-                    setWorkAmount(surveyData["work-amount"]);
-                    setIsLoading(false); // Loading the data is complete
-                });
-              })
-              .catch((error) => {
-                console.error("Error getting survey data:", error);
-                setIsLoading(false); //Loading the data is complete even in case of error
-              });
-        }
-    }, []);
 
 
 
@@ -110,34 +71,27 @@ function YourProfile(){
                     <Grid item xs={8}
                           alignItems="center" >
             <div className='flex-container'>
-                
-                {isLoading ? (
-                    <p>Loading...</p>
-                ) : (
-                <>
+
 
                 <div class = 'flex-user'>
                     <img sx={{paddingTop:'-5px'}}
                          src={require("../pictures/imagePlaceholder.jpg")}
                          alt="FindMyRoomie" className="logo"/>
                     <p>
-                        {name}
+                        Alexa Padberg
                     </p>
                     <p>
-                        {email}
+                        padberga@g.cofc.edu
                     </p>
                      <p>
                          {schoolYear} Year
                     </p>
-
-                    {/*need to add a college part in the survey or we need to figure out
-                        // how we're going to go about displaying college based off them filling out information when they register8? */}
                     <p>
                         College of Charleston
                     </p>
-                    <p>
-                        Bio: <b>{bio}</b>
-                    </p>
+                    {/*<p>*/}
+                    {/*    Bio: {bio}*/}
+                    {/*</p>*/}
                     <button>
                         update profile
                     </button>
@@ -157,13 +111,13 @@ function YourProfile(){
                         Typically Wake up at: <b>{wakeup} AM</b>
                     </p>
                     <p>
-                        Extroverted? <b> {extroverted} </b>
+                        Extroverted? <b> Agree </b>
                     </p>
                     <p>
-                        Friendship with roommates? <b> {closeness}</b>
+                        Friendship with roommates? <b> Neutral</b>
                     </p>
                     <p>
-                        are you clean? <b> {cleanness}</b>
+                        are you clean? <b> Strongly Agree</b>
                     </p>
                     <p>
                         work week hours: <b>{workAmount}</b>
@@ -175,8 +129,8 @@ function YourProfile(){
                         edit roommate preferences
                     </button>
                 </div>
-                </>
-            )}
+
+
 
             </div>
                     </Grid>
