@@ -147,46 +147,6 @@ const storeSurveyResults = async(userId, surveyData) => {
 
 };
 
-// const storeSurveyResults = async(userId, surveyData) => {
-//     try {
-//         // Create a reference to the user's document in the "user" collection
-//         const userRef = collection("users").doc(userId);
-
-//         // create a reference to the subcollection "userSurveys" within the "user"
-//         const userSurveysRef = collection(userRef, "userSurveys");
-
-//         // add a new document in the "userSurveys" subcollection with the survey data
-//         await addDoc(userSurveysRef, surveyData);
-
-//         // update user's profile to mark they have completed survey
-//         await updateDoc(userRef, {
-//             completedSurvey: true,
-//         });
-
-//         console.log("Survey data saved successfully in the subcollection of the users data.");
-    
-//     } catch (err) {
-//         console.error(err);
-//         alert("Failed to save survey data. " + err.message);
-//     }
-
-// };
-
-// const storeSurveyResults = async (surveyData) => {
-//     try {
-
-//         const surveyRef = await addDoc(surveysCollection, {
-//             surveyData,
-//             timestamp: new Date(),
-//         });
-
-//         console.log("Survey data saved successfully with ID:", surveyRef.id);
-//     } catch (err) {
-//         console.error(err);
-//         alert("Failed to save survey data. " + err.message);
-//     }
-// };
-
 const logout = () => {
     signOut(auth);
 };
