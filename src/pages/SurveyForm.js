@@ -8,7 +8,7 @@ import '../styling/SurveyForm.css'
 import "survey-core/survey.css";
 import Navbar from "../components/Navbar"
 import Typography from "@mui/material/Typography";
-import Loading from "../pages/LoadingPage"
+import Loading from "../pages/LoadingPage";
 
 
 const surveyJson = {
@@ -206,6 +206,7 @@ function SurveyForm() {
         grade: '',
         major: '',
         bio: '',
+
         cleanliness: 0,
         friendliness: 0,
         studyAmount: 0,
@@ -214,41 +215,42 @@ function SurveyForm() {
         workhours: 0,
         closeness: 0,
         roommateamount: 0,
-
     });
     const [formComplete, setFormComplete] = useState(false);
     const navigate = useNavigate();
-
+    
 
     const survey = new Model(surveyJson);
-
     survey.focusFirstQuestionAutomatic = false;
-
-
 
     const handleSurveyComplete = () => {
         const surveyData = survey.data;
         setFormData(surveyData);
         setFormComplete(true);
+
+        // get the uid
+        const user = auth.currentUser;
+        if (user) {
+            const userId = user.uid;
+            storeSurveyResults(userId, surveyData);
+            navigate('/Loading');
+        }
+        else {
+            // user isn't authenticated
+            console.error('User is not authenticated.');
+        }
     
-        const userId = auth.currentUser.uid;
-    
-        storeSurveyResults(userId, surveyData);
-    
-        navigate('/Loading');
+        //storeSurveyResults(userId, surveyData);
+        //navigate('/Loading');
     };
 
-
     return (
-
-            <div style={{ backgroundColor: '#f0f0f0' }}>
-                <Navbar/>
-                <Typography variant="h6" align='center' sx={{display:'flex-start', paddingTop:'10px', paddingLeft: '10px' }}>Please complete the survey before continuing:</Typography>
-                <Survey model={survey}  onComplete={handleSurveyComplete}/>
-            </div>
-
+        <div style={{ backgroundColor: '#f0f0f0' }}>
+            <Navbar/>
+            <Typography variant="h6" align='center' sx={{display:'flex-start', paddingTop:'10px', paddingLeft: '10px' }}>Please complete the survey before continuing:</Typography>
+            <Survey model={survey} onComplete={handleSurveyComplete} />
+        </div>
     );
 }
-
 
 export default SurveyForm;
