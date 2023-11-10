@@ -5,6 +5,8 @@ import Grid from "@mui/material/Grid";
 import Sidebar from "../Sidebar";
 import {collection, getDocs, query, where} from "firebase/firestore";
 import {firestore} from "../firebase";
+import $ from 'jquery';
+
 function YourProfile(){
 
     const [age, setAge] = useState("");
@@ -53,8 +55,40 @@ function YourProfile(){
             console.error("Error getting survey data:", error);
         });
 
+    function uploadProfilePicture() {
+        const fileInput = document.getElementById('imageUpload');
+        const preview = document.getElementById('preview');
+        const profileImage = document.getElementById('profileImage');
 
+        const file = fileInput.files[0];
 
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const img = new Image();
+                img.src = e.target.result;
+
+                img.onload = function () {
+                    // Display the uploaded image in the preview div
+                    preview.innerHTML = '';
+                    preview.appendChild(img);
+
+                    // Update the profile image
+                    profileImage.src = e.target.result;
+                };
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+    function loadFile(event) {
+        const output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    };
 
     return(
         // upload and delete image function
@@ -76,8 +110,18 @@ function YourProfile(){
                 <div class = 'flex-user'>
                     <img sx={{paddingTop:'-5px'}}
                          src={require("../pictures/imagePlaceholder.jpg")}
-                         alt="FindMyRoomie" className="logo"/>
-                    <p>
+                         alt="FindMyRoomie"
+                         id="output"
+                         className="logo"/>
+                    <div id="profile-picture-container">
+
+                    </div>
+                    <input id="imageUpload" type="file"
+                           name="profile_photo" placeholder="Photo" required="" capture></input>
+                    <input type="file" accept="image/*" onChange={loadFile}/>
+
+
+                       <p>
                         Alexa Padberg
                     </p>
                     <p>
