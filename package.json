@@ -25,6 +25,7 @@
     "react-scripts": "^5.0.1",
     "survey-core": "^1.9.113",
     "survey-react-ui": "^1.9.112",
+    "toastify": "^2.0.1",
     "toastify-js": "^1.12.0",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"

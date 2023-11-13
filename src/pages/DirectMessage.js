@@ -12,11 +12,11 @@ function DirectMessage() {
         <div className="DirectMessagePage">
             <Navbar/>
             <Grid container spacing={2}>
-                <Grid item xs={2}>
+                <Grid item xs={2} xs-column={8}>
                     <Sidebar/>
 
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={8} >
                     <div className="pageContainer">
                         <div className="container">
 

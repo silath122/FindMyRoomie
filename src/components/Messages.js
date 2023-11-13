@@ -14,6 +14,7 @@ const Messages = () => {
     }
   };
   useEffect(()=>{
+    console.log(data)
     const unSub = onSnapshot(doc(firestore, "chats", data.chatId), (doc)=>{
       doc.exists() && setMessages(doc.data().messages)
       scrollToBottom();
@@ -22,22 +23,22 @@ const Messages = () => {
     return()=>{
       unSub()
     }
-  })
+  }, [data.chatId])
+  console.log(data.chatId)
+  console.log(messages)
+  if(messages == null){
+    return(
+      <div></div>
+    )
+  }
   return (
       <div className="messages" ref={messagesDivRef}>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
+        {messages.map(m=>{
+          return <Message message={m} key={m.id}/>
+      })}
       </div>
       
-    // <div className="messages">
-    //   {messages.map(m=>{
-    //     <Message message={m} key={m.id}/>
-    //   })}
-        
-    // </div>
+
   )
 }
 export default Messages;

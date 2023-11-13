@@ -16,6 +16,7 @@ const Input = () => {
   const {data} = useContext(ChatContext)
 
   const handleSend = async ()=>{
+    console.log(data.chatId)
     if(img){
       const storageRef = ref(storage, uuid());
 
@@ -26,13 +27,13 @@ const Input = () => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            
             await updateDoc(doc(firestore, "chats", data.chatId), {
               messages: arrayUnion({
-                id: uuid(),
-                text,
-                senderId: currentUser.uid,
-                date: Timestamp.now(),
-                img: downloadURL,
+                attachment: img,
+                content: text,
+                senderID: currentUser.uid,
+                
               }),
             });
           });
@@ -41,10 +42,9 @@ const Input = () => {
     }else{
       await updateDoc(doc(firestore,"chats",data.chatId),{
         messages: arrayUnion({
-          id: uuid,
-          text,
-          senderId: currentUser.uid,
-          date: Timestamp.now(),
+          attachment: img,
+          content: text,
+          senderID: currentUser.uid,
         })
       })
     }
