@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import {auth, storeSurveyResults} from "../firebase"
+import {app, auth, storeSurveyResults} from "../firebase"
+import {getFirestore, doc, getDoc} from "firebase/firestore";
 import "survey-core/defaultV2.min.css";
 import { Model, StylesManager } from "survey-core";
 import { Survey } from "survey-react-ui";
@@ -10,6 +11,10 @@ import Navbar from "../components/Navbar"
 import Typography from "@mui/material/Typography";
 import Loading from "../pages/LoadingPage";
 
+
+
+// need this for handlesurvey method
+const firestore = getFirestore(app);
 
 const surveyJson = {
     elements: [
@@ -223,7 +228,7 @@ function SurveyForm() {
     const survey = new Model(surveyJson);
     survey.focusFirstQuestionAutomatic = false;
 
-    const handleSurveyComplete = () => {
+    const handleSurveyComplete = async () => {
         const surveyData = survey.data;
         setFormData(surveyData);
         setFormComplete(true);
@@ -231,9 +236,25 @@ function SurveyForm() {
         // get the uid
         const user = auth.currentUser;
         if (user) {
-            const userId = user.uid;
-            storeSurveyResults(userId, surveyData);
-            navigate('/Loading');
+            try {
+                const userId = user.uid;
+
+                // const userRef = doc(firestore, "users", userId);
+                // const userDoc = await getDoc(userRef);
+
+                
+                // const userData = userDoc.data();
+                // const userId2 = userData.uid;
+
+                storeSurveyResults(userId, surveyData);
+                navigate('/Loading');
+
+                
+            }
+            catch (error) {
+                console.error('Error saving survey:', error);
+                alert('Failed to save survey data: ', + error.message);
+            }
         }
         else {
             // user isn't authenticated

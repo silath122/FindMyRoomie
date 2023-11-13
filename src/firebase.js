@@ -17,7 +17,7 @@ import {
     sendPasswordResetEmail,
     signOut} from "firebase/auth";
 import {useNavigation} from "react-router-dom";
-import {doc, updateDoc, setDoc} from "firebase/firestore";
+import {doc, updateDoc, setDoc, getDoc} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -36,9 +36,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
 
-// create a reference to "surveys" collection
-const surveysCollection = collection(firestore, "surveys");
-
 const signInWithGoogle = async () => {
     try{
         const res = await signInWithPopup(auth,googleProvider);
@@ -46,13 +43,17 @@ const signInWithGoogle = async () => {
         const q = query(collection(firestore, "users"), where ("uid", "==", user.uid));
         const docs = await  getDocs(q);
         if (docs.docs.length===0){
-            await addDoc(collection(firestore,"users"),
-                {
-                    uid: user.uid,
-                    name: user.displayName,
-                    authProvider: "google",
-                    email: user.email,
-                });
+
+             // Set the document ID as the users uid
+            const userRef = doc(firestore, "users", user.uid);
+
+            await setDoc(userRef, {
+                uid: user.uid,
+                name: user.displayName,
+                authProvider: "google",
+                email: user.email,
+                completedSurvey: false,
+            });
         }
 
     }catch(err){
@@ -71,15 +72,15 @@ const logInWithEmailAndPassword = async (email,password) =>{
     }
 }
 
+
 const registerWithEmailAndPassword = async (name, email, password) => {
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const user = res.user;
 
-        // Create a reference to the user's document in the "users" collection
-        const userRef = doc(firestore, "users", user.uid);
+        // Set the document ID as the users uid
+        const userRef = doc(firestore, "users", user.uid); 
 
-        // Add user data directly in the "users" collection
         await setDoc(userRef, {
             name,
             authProvider: "local",
@@ -94,23 +95,6 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     }
 };
 
-// const registerWithEmailAndPassword = async (name, email, password) => {
-//     try {
-//         const res = await createUserWithEmailAndPassword(auth, email, password);
-//         const user = res.user;
-//         await addDoc(collection(firestore, "users"), {
-//             uid: user.uid,
-//             name,
-//             authProvider: "local",
-//             email,
-//             completedSurvey: false,
-//         });
-//     } catch (err) {
-//         console.error(err);
-//         alert(err.message);
-//     }
-// };
-
 const sendPasswordReset = async (email) => {
     try {
         await sendPasswordResetEmail(auth, email);
@@ -121,31 +105,35 @@ const sendPasswordReset = async (email) => {
     }
 };
 
-const storeSurveyResults = async(userId, surveyData) => {
+
+const storeSurveyResults = async (userId, surveyData) => {
     try {
-        // Create a reference to the user's document in the "user" collection
+        const timestamp = new Date();
+        surveyData.timestamp = timestamp;
+        
+        // Check if the user document exists
         const userRef = doc(firestore, "users", userId);
+        const userDoc = await getDoc(userRef);
 
-        // create a reference to the subcollection "userSurveys" within the "user"
-        const userSurveysRef = collection(userRef, "userSurveys");
+        if (userDoc.exists()) {
+            // Update the users survey completion
+            await updateDoc(userRef, { surveyCompleted: true });
 
-        // add a new document in the "userSurveys" subcollection with the survey data
-        await addDoc(userSurveysRef, surveyData);
+            await addDoc(collection(firestore, "surveys"), {
+                uid: userId,
+                surveyData: surveyData
+            });
 
-        // we don't need this method
-        // // update user's profile to mark they have completed survey
-        // await updateDoc(userRef, {
-        //     completedSurvey: true,
-        // });
-
-        console.log("Survey data saved successfully in the subcollection of the users data.");
-    
+            console.log("Survey data saved successfully in the surveys collection.");
+        } else {
+            console.error("User document doesn't exist for user: " + userId);
+        }
     } catch (err) {
         console.error(err);
         alert("Failed to save survey data. " + err.message);
     }
-
 };
+
 
 const logout = () => {
     signOut(auth);
@@ -160,6 +148,7 @@ export {
     sendPasswordReset,
     storeSurveyResults,
     logout,
+    app
 };
 
 // Initialize Firebase
