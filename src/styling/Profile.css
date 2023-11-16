@@ -35,6 +35,9 @@
 .flex-user img{
     align-self: center;
     height: 26%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
 }
 .flex-survey
 {
@@ -74,4 +77,24 @@
     font-size: 20px;
     text-align: center;
     line-height: 55px;
+}
+
+.profile-picture-container {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+}
+#imageUpload
+{
+    display: none;
+}
+
+#profileImage
+{
+    cursor: pointer;
 }

@@ -12,7 +12,7 @@ const Chat = () =>{
         return(
             <div className="chat">
                 <div className="chatInfo">
-                    <span>{JSON.parse(data.user?.displayName)}</span>  
+                    <span>{(data.user?.displayName)}</span>  
                 </div>
                 <Messages/>
                 <Input/>
