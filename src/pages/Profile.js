@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 import Sidebar from "../Sidebar";
 import {collection, getDocs, query, where} from "firebase/firestore";
 import {firestore} from "../firebase";
-import $ from 'jquery';
 
 function YourProfile(){
 
