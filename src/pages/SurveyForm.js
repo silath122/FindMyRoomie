@@ -230,8 +230,8 @@ function SurveyForm() {
 
     const handleSurveyComplete = async () => {
         const surveyData = survey.data;
-        setFormData(surveyData);
-        setFormComplete(true);
+        setFormData(surveyData); 
+        setFormComplete(true); // it sets the form to true before it even runs.. try putting in try section - Fix later (Siah)
 
         // get the uid
         const user = auth.currentUser;
@@ -239,16 +239,8 @@ function SurveyForm() {
             try {
                 const userId = user.uid;
 
-                // const userRef = doc(firestore, "users", userId);
-                // const userDoc = await getDoc(userRef);
-
-                
-                // const userData = userDoc.data();
-                // const userId2 = userData.uid;
-
                 storeSurveyResults(userId, surveyData);
                 navigate('/Loading');
-
                 
             }
             catch (error) {
@@ -260,9 +252,7 @@ function SurveyForm() {
             // user isn't authenticated
             console.error('User is not authenticated.');
         }
-    
-        //storeSurveyResults(userId, surveyData);
-        //navigate('/Loading');
+
     };
 
     return (

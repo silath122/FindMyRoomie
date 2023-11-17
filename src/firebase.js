@@ -82,6 +82,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
         const userRef = doc(firestore, "users", user.uid); 
 
         await setDoc(userRef, {
+            uid: user.uid,
             name,
             authProvider: "local",
             email,
@@ -117,9 +118,12 @@ const storeSurveyResults = async (userId, surveyData) => {
 
         if (userDoc.exists()) {
             // Update the users survey completion
-            await updateDoc(userRef, { surveyCompleted: true });
+            await updateDoc(userRef, { completedSurvey: true });
+            
+            // set document id as uid
+            const surveyRef = doc(collection(firestore, "surveys"), userId);
 
-            await addDoc(collection(firestore, "surveys"), {
+            await setDoc(surveyRef, {
                 uid: userId,
                 surveyData: surveyData
             });
@@ -128,6 +132,7 @@ const storeSurveyResults = async (userId, surveyData) => {
         } else {
             console.error("User document doesn't exist for user: " + userId);
         }
+
     } catch (err) {
         console.error(err);
         alert("Failed to save survey data. " + err.message);
