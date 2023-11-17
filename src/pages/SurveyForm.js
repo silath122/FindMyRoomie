@@ -241,7 +241,6 @@ function SurveyForm() {
 
                 storeSurveyResults(userId, surveyData);
                 navigate('/Loading');
-
                 
             }
             catch (error) {
@@ -253,9 +252,7 @@ function SurveyForm() {
             // user isn't authenticated
             console.error('User is not authenticated.');
         }
-    
-        //storeSurveyResults(userId, surveyData);
-        //navigate('/Loading');
+
     };
 
     return (

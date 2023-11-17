@@ -118,7 +118,7 @@ const storeSurveyResults = async (userId, surveyData) => {
 
         if (userDoc.exists()) {
             // Update the users survey completion
-            await updateDoc(userRef, { surveyCompleted: true });
+            await updateDoc(userRef, { completedSurvey: true });
             
             // set document id as uid
             const surveyRef = doc(collection(firestore, "surveys"), userId);
