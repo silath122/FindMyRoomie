@@ -46,6 +46,9 @@ function YourProfile(){
                 //loop through specific users answers and look at "survey data" field
                     querySnapshot.forEach((doc) => {
                         const surveyData = doc.data().surveyData;
+                        setFullName(surveyData.fullName)
+                        setCollegeName(surveyData.collegeName)
+                        setSchoolYear(surveyData.Year)
                         setAge(surveyData.age)
                         setBedtime(surveyData.bedtime)
                         setSmoke(surveyData.smoke);
@@ -125,7 +128,7 @@ function YourProfile(){
             <div className='flex-container'>
 
 
-                <div class = 'flex-user'>
+                <div class = 'flex-survey'>
                     <img sx={{paddingTop:'-5px'}}
                          src={require("../pictures/imagePlaceholder.jpg")}
                          alt="FindMyRoomie"
@@ -139,17 +142,17 @@ function YourProfile(){
                     <input type="file" accept="image/*" onChange={loadFile}/>
 
 
-                       <p>
-                        Alexa Padberg
+                    <p>
+                        <b>Name: {fullName}</b>
                     </p>
                     <p>
-                        padberga@g.cofc.edu
+                        <b>Email: padberga@g.cofc.edu}</b>
                     </p>
                      <p>
-                         {schoolYear} Year
+                         <b> schoolYear: {schoolYear} </b>
                     </p>
                     <p>
-                        College of Charleston
+                        <b> College: {collegeName}</b>
                     </p>
                     {/*<p>*/}
                     {/*    Bio: {bio}*/}
