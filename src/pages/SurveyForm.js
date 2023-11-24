@@ -64,6 +64,38 @@ const surveyJson = {
             }]
         },
         {
+            name: "smoke",
+            title: "Do You Smoke/vape?",
+            type: "dropdown",
+            isRequired: "true",
+            "choices": [{
+                            "value": "yes",
+                            "text": "Yes"
+                        }, {
+                            "value": "no",
+                            "text": "No"
+                        }]
+        },
+         {
+             name: "etcAllergy",
+             title: "If you have any allergies, please detail them below. If you have none, then please type none.",
+             type: "text",
+             isRequired: "True",
+         },
+         {
+            name: "pets",
+            title: "Are you okay with pets?",
+            type: "dropdown",
+            isRequired: "true",
+            "choices": [{
+                            "value": "yes",
+                            "text": "Yes"
+                        }, {
+                            "value": "no",
+                            "text": "No"
+                        }]
+        },
+        {
             name: "studyHours",
             studyHours: "year",
             title: "How much do you like to study daily?",
@@ -211,7 +243,9 @@ function SurveyForm() {
         grade: '',
         major: '',
         bio: '',
-
+        smoke: '',
+        etcAllergy:'',
+        pets: '',
         cleanliness: 0,
         friendliness: 0,
         studyAmount: 0,

@@ -31,6 +31,9 @@ function YourProfile(){
     const [collegeName, setCollegeName] = useState("");
     const [age, setAge] = useState("");
     const [bedtime, setBedtime] =useState("");
+    const [smoke, setSmoke] =useState("");
+    const [etcAllergy, setEtcAlg] =useState("");
+    const [pets, setPet] =useState("");
     const [bio, setBio] =useState("");
     const [numberRoommates, setNumberRoommates] =useState("");
     const [studyHours, setStudyHours] =useState("");
@@ -63,8 +66,14 @@ function YourProfile(){
                         const surveyData = doc.data().surveyData;
                         setFullName(surveyData.fullName)
                         setCollegeName(surveyData.collegeName)
+                        setFullName(surveyData.fullName)
+                        setCollegeName(surveyData.collegeName)
+                        setSchoolYear(surveyData.Year)
                         setAge(surveyData.age)
                         setBedtime(surveyData.bedtime)
+                        setSmoke(surveyData.smoke);
+                        setEtcAlg(surveyData.etcAllergy);
+                        setPet(surveyData.pets);
                         setStudyHours(surveyData.studyHours)
                         setBio(surveyData.bio)
                         setSchoolYear(surveyData.year)
@@ -139,7 +148,7 @@ function YourProfile(){
             <div className='flex-container'>
 
 
-                <div class = 'flex-user'>
+                <div class = 'flex-survey'>
                     <img sx={{paddingTop:'-5px'}}
                          src={require("../pictures/imagePlaceholder.jpg")}
                          alt="FindMyRoomie"
@@ -160,7 +169,7 @@ function YourProfile(){
                         padberga@g.cofc.edu
                     </p> */}
                      <p>
-                         {schoolYear} Year
+                         <b> schoolYear: {schoolYear} </b>
                     </p>
                     <p>
                         {collegeName}
@@ -179,6 +188,15 @@ function YourProfile(){
                     </p>
                     <p>
                         Study Hours: <b>{studyHours} hours</b>
+                    </p>
+                    <p>
+                        Smoke: <b>{smoke}</b>
+                    </p>
+                    <p>
+                        Listed Allergies: <b>{etcAllergy}</b>
+                    </p>
+                    <p>
+                        Pet: <b>{pets}</b>
                     </p>
                     <p>
                         Typically go to sleep at: <b>{bedtime} PM</b>
