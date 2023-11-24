@@ -13,6 +13,9 @@ function YourProfile(){
     const [collegeName, setCollegeName] = useState("");
     const [age, setAge] = useState("");
     const [bedtime, setBedtime] =useState("");
+    const [smoke, setSmoke] =useState("");
+    const [etcAllergy, setEtcAlg] =useState("");
+    const [pets, setPet] =useState("");
     const [bio, setBio] =useState("");
     const [numberRoommates, setNumberRoommates] =useState("");
     const [studyHours, setStudyHours] =useState("");
@@ -45,6 +48,9 @@ function YourProfile(){
                         const surveyData = doc.data().surveyData;
                         setAge(surveyData.age)
                         setBedtime(surveyData.bedtime)
+                        setSmoke(surveyData.smoke);
+                        setEtcAlg(surveyData.etcAllergy);
+                        setPet(surveyData.pets);
                         setStudyHours(surveyData.studyHours)
                         setBio(surveyData.bio)
                         setSchoolYear(surveyData.year)
@@ -159,6 +165,15 @@ function YourProfile(){
                     </p>
                     <p>
                         Study Hours: <b>{studyHours} </b>
+                    </p>
+                    <p>
+                        Smoke: <b>{smoke}</b>
+                    </p>
+                    <p>
+                        Listed Allergies: <b>{etcAllergy}</b>
+                    </p>
+                    <p>
+                        Pet: <b>{pets}</b>
                     </p>
                     <p>
                         Typically go to sleep at: <b>{bedtime} PM</b>
