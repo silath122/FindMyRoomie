@@ -32,6 +32,7 @@ function YourProfile(){
     const [age, setAge] = useState("");
     const [bedtime, setBedtime] =useState("");
     const [smoke, setSmoke] =useState("");
+    const [drink, setDrink] =useState("");
     const [etcAllergy, setEtcAlg] =useState("");
     const [pets, setPet] =useState("");
     const [bio, setBio] =useState("");
@@ -72,6 +73,7 @@ function YourProfile(){
                         setAge(surveyData.age)
                         setBedtime(surveyData.bedtime)
                         setSmoke(surveyData.smoke);
+                        setDrink(surveyData.drink);
                         setEtcAlg(surveyData.etcAllergy);
                         setPet(surveyData.pets);
                         setStudyHours(surveyData.studyHours)
@@ -191,6 +193,9 @@ function YourProfile(){
                     </p>
                     <p>
                         Smoke: <b>{smoke}</b>
+                    </p>
+                    <p>
+                        Drink: <b>{drink}</b>
                     </p>
                     <p>
                         Listed Allergies: <b>{etcAllergy}</b>
