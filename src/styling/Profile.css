@@ -72,16 +72,16 @@
     justify-content: center;
     background-color: #ffffff;
     width: 500px;
-    height: 600px;
+    height: 800px;
     margin: 10px;
     font-size: 20px;
     text-align: center;
-    line-height: 55px;
+    line-height: 40px;
 }
 
 .profile-picture-container {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     overflow: hidden;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;

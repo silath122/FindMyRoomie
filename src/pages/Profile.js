@@ -14,6 +14,7 @@ function YourProfile(){
     const [age, setAge] = useState("");
     const [bedtime, setBedtime] =useState("");
     const [smoke, setSmoke] =useState("");
+    const [drink, setDrink] =useState("");
     const [etcAllergy, setEtcAlg] =useState("");
     const [pets, setPet] =useState("");
     const [bio, setBio] =useState("");
@@ -52,6 +53,7 @@ function YourProfile(){
                         setAge(surveyData.age)
                         setBedtime(surveyData.bedtime)
                         setSmoke(surveyData.smoke);
+                        setDrink(surveyData.drink);
                         setEtcAlg(surveyData.etcAllergy);
                         setPet(surveyData.pets);
                         setStudyHours(surveyData.studyHours)
@@ -128,8 +130,8 @@ function YourProfile(){
             <div className='flex-container'>
 
 
-                <div class = 'flex-survey'>
-                    <img sx={{paddingTop:'-5px'}}
+                <div class = 'flex-user'>
+                    <img sx={{paddingTop:'10px'}}
                          src={require("../pictures/imagePlaceholder.jpg")}
                          alt="FindMyRoomie"
                          id="output"
@@ -140,7 +142,6 @@ function YourProfile(){
                     <input id="imageUpload" type="file"
                            name="profile_photo" placeholder="Photo" required="" capture></input>
                     <input type="file" accept="image/*" onChange={loadFile}/>
-
 
                     <p>
                         <b>Name: {fullName}</b>
@@ -154,9 +155,10 @@ function YourProfile(){
                     <p>
                         <b> College: {collegeName}</b>
                     </p>
-                    {/*<p>*/}
-                    {/*    Bio: {bio}*/}
-                    {/*</p>*/}
+                    <p> Bio: </p>
+                    <p>
+                       <b>{bio} </b>
+                    </p>
                     <button>
                         update profile
                     </button>
@@ -171,6 +173,9 @@ function YourProfile(){
                     </p>
                     <p>
                         Smoke: <b>{smoke}</b>
+                    </p>
+                    <p>
+                        Drink: <b>{drink}</b>
                     </p>
                     <p>
                         Listed Allergies: <b>{etcAllergy}</b>

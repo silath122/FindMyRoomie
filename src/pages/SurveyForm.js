@@ -76,6 +76,28 @@ const surveyJson = {
                             "text": "No"
                         }]
         },
+        {
+            name: "drink",
+            title: "How often do you drink?",
+            type: "dropdown",
+            isRequired: "true",
+            "choices": [{
+                            "value": "never",
+                            "text": "Never"
+                        },
+                        {
+                            "value": "Socially",
+                            "text": "Socially"
+                        },
+                        {
+                            "value": "once or twice a week",
+                            "text": "Once or twice twice a week"
+                        },
+                        {
+                            "value": "More than twice a week",
+                            "text": "More than twice a week"
+                        }]
+        },
          {
              name: "etcAllergy",
              title: "If you have any allergies, please detail them below. If you have none, then please type none.",
@@ -244,6 +266,7 @@ function SurveyForm() {
         major: '',
         bio: '',
         smoke: '',
+        drink: '',
         etcAllergy:'',
         pets: '',
         cleanliness: 0,
