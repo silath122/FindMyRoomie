@@ -27,7 +27,11 @@ export default function Home() {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
     const [fn, sfn] =useState("");
+    const navigate = useNavigate();
+    const message = () => {
 
+        navigate ("/messages");
+    };
 
     const fetchUserName = async () => {
         try {
@@ -42,6 +46,40 @@ export default function Home() {
             console.error(err);
         }
     };
+
+    const [matches, setMatches] = useState([
+        {
+            name: "Jenna Roux",
+            image: require("../pictures/jenna.png"),
+
+            bio: "Hi, I'm Jenna! I'm a business major at CofC. I'm looking for two roommates to live with as I go into my Junior year of College.",
+            matchPercentage: 73,
+        },
+        {
+            name: "Sophia Jenkins",
+            image: require("../pictures/sophia.png"),
+            bio: "Hi, I'm Sophia, and I'm a college student in my early twenties majoring in Computer Science. I'm excited about my upcoming semester in a new city and looking forward to making the most of my college experience. I'm friendly, responsible, and eager to find roommates who share similar values and can create a supportive and enjoyable living environment.",
+            matchPercentage: 55,
+        },
+        {
+            name: "Sarah Stewart",
+            image: require("../pictures/sarah.png"),
+            bio: "I'm a college senior majoring in Environmental Science. With a passion for sustainability, I'm excited about my final year and eager to make eco-conscious choices in my new living space. I'm friendly, outgoing, and looking for roommates who value a green lifestyle and enjoy outdoor adventures.",
+            matchPercentage: 95,
+        },
+        {
+            name: "Lilly Quinn",
+            image: require("../pictures/lilly.png"),
+            bio: "I'm a freshman studying Literature and dreaming of becoming a published author someday. I'm a bookworm, an introvert, and I adore cozy evenings with a good book. I'm hoping to find roommates who share my love for literature and appreciate a quiet and book-friendly environment.",
+            matchPercentage: 82,
+        },
+    ]);
+
+    const topMatches = matches
+        .sort((a, b) => b.matchPercentage - a.matchPercentage)
+        // Sort in descending order
+        .slice(0, 2);
+    // Get top 2 matches
 
 
 
@@ -88,65 +126,54 @@ export default function Home() {
                         gap: '10px',
 
                     }}>
-                    <Card sx={{ width: 800, Height: 50, align: 'center', marginTop: '10px' }}>
-                        <Box display="flex" >
-                            <CardMedia
-                                component="img"
-                                height="50%"
-                                image={require("../pictures/jenna.png")}
-                                alt="Sarah Stewart"
-                                sx={{ width: "100px", height: "120px", padding: '10px' }}
-                            />
-                        <CardContent>
-                            <Typography variant="h5" component="div">
-                                Sarah Stewart
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                I'm a college senior majoring in Environmental Science.
-                                With a passion for sustainability, I'm excited about my final year and eager
-                                to make eco-conscious choices in my new living space. I'm friendly, outgoing,
-                                and looking for roommates who value a green lifestyle and enjoy outdoor adventures.
-                            </Typography>
-                            <Typography variant="h5" component="div" color="blue"
-                                        sx={{ marginTop:'10px', textAlign: 'right' }}>
-                                95% Match
-                            </Typography>
-                        </CardContent>
-                        </Box>
-                        <CardActions>
-                            <Button size="small">Message Now</Button>
-                        </CardActions>
-                    </Card>
-                    <Card sx={{ width: 800, Height: 50, align: 'center', marginTop: '10px'  }}>
-                        <Box display="flex">
-                            <CardMedia
-                                component="img"
-                                height="100%"
-                                image={require("../pictures/lilly.png")}
-                                alt="Sophia Jenkins"
-                                sx={{ width: "100px", height: "130px", padding: '10px' }}
-                            />
-                        <CardContent>
-                            <Typography variant="h5" component="div">
-                                Lilly Quinn
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                I'm a freshman studying Literature and dreaming of
-                                becoming a published author someday. I'm a bookworm, an introvert,
-                                and I adore cozy evenings with a good book. I'm hoping to find
-                                roommates who share my love for literature and appreciate a quiet and
-                                book-friendly environment.
-                            </Typography>
-                            <Typography variant="h5" component="div" color="blue"
-                                        sx={{ marginTop:'10px', textAlign: 'right' }}>
-                                82% Match
-                            </Typography>
-                        </CardContent>
-                        </Box>
-                        <CardActions>
-                            <Button size="small">Message Now</Button>
-                        </CardActions>
-                    </Card>
+                        {topMatches.map((match, index) => (
+                        <Card
+                            key={index}
+                            sx={{ width: 600, Height: 200, align: 'center', marginTop: '10px' }}
+                        >
+                            <Box display="flex">
+                                <CardMedia
+                                    component="img"
+                                    height="70%"
+                                    image={match.image}
+                                    alt={match.name}
+
+                                    sx={{ marginTop:'20px',  justifyContent: 'center', width: "100px", height: "120px", padding: '10px' }}
+                                />
+                                <CardContent>
+                                    <Typography variant="h5" component="div" align= "right" sx={{marginBottom:'10px', justifyContent: 'right'}}>
+                                        {match.name}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary" align= "right">
+                                        {match.bio}
+                                    </Typography>
+                                    <Typography variant="h5" component="div" align= "right" color="blue" sx={{ marginTop: '10px', textAlign: 'right' }}>
+                                        {match.matchPercentage}% Match
+                                    </Typography>
+                                </CardContent>
+                            </Box>
+
+                            <Box
+                                alignItems="center"
+                                sx={{ align: 'center', justifyContent: 'center', padding:'10px' }}
+                            >
+                                <Button size="small"
+                                        variant="outlined"
+                                        onClick={message}
+                                        sx={{ color: 'green',  borderColor: 'green', paddingRight:'10px', mx: 2 }}
+                                >
+                                    Message Now</Button>
+
+                            </Box>
+
+                            <Box align= 'center'
+                                 sx={{ align: 'center', paddingBottom: '10px', paddingLeft: '100px'}}
+                            >
+
+                            </Box>
+                        </Card>
+                        ))}
+
                     </Box>
                     <Box style={{
                         alignItems: 'left',
@@ -154,6 +181,15 @@ export default function Home() {
                         paddingTop: '20px'
                     }}>
                     </Box>
+
+
+                <Box style={{
+                    alignItems: 'left',
+                    paddingLeft: '110px'
+                }}>
+                    <div>Follow up with your latest message:</div>
+                </Box>
+
 
 
                 </Grid>
