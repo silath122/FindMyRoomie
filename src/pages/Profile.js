@@ -150,7 +150,7 @@ function YourProfile(){
             <div className='flex-container'>
 
 
-                <div class = 'flex-survey'>
+                <div class = 'flex-user'>
                     <img sx={{paddingTop:'-5px'}}
                          src={require("../pictures/imagePlaceholder.jpg")}
                          alt="FindMyRoomie"
