@@ -34,7 +34,7 @@
 }
 .flex-user img{
     align-self: center;
-    height: 26%;
+    height: 20%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
@@ -46,7 +46,7 @@
     justify-content: center;
     background-color: #ffffff;
     width: 500px;
-    height: 800px;
+    height: 850px;
     margin: 10px;
     font-size: 20px;
     text-align: center;
@@ -63,7 +63,7 @@
     margin: 10px;
     font-size: 20px;
     text-align: center;
-    line-height: 75px;
+    line-height: 60px;
 }
 .flex-user
 {
@@ -72,7 +72,7 @@
     justify-content: center;
     background-color: #ffffff;
     width: 500px;
-    height: 800px;
+    height: 850px;
     margin: 10px;
     font-size: 20px;
     text-align: center;
