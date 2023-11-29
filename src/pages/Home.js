@@ -32,7 +32,10 @@ export default function Home() {
 
         navigate ("/messages");
     };
+    const chats = collection(firestore, "userChats");
+    const lastMessage = chats?.text || "We're sorry, but no messages are available. Go to the message page to message users";
 
+    console.log("chats= ", chats.lastMessage);
     const fetchUserName = async () => {
         try {
             const q = query(collection(firestore, "users"), where("uid", "==", user?.uid));
@@ -84,7 +87,6 @@ export default function Home() {
 
 
 
-
     useEffect(() => {
 
 
@@ -114,7 +116,8 @@ export default function Home() {
                     </Box>
                         <Box style={{
                             alignItems: 'left',
-                            paddingLeft: '110px'
+                            paddingLeft: '150px',
+                            paddingBottom:'30px'
                         }}>
                         <div>Top Matches: </div>
                         </Box>
@@ -184,11 +187,55 @@ export default function Home() {
 
 
                 <Box style={{
-                    alignItems: 'left',
-                    paddingLeft: '110px'
+
+                    paddingLeft: '150px',
+                    paddingBottom:'30px'
                 }}>
-                    <div>Follow up with your latest message:</div>
+                    <div>Your latest message:</div>
+
                 </Box>
+
+                        {chats && chats.lastMessage && chats.lastMessage.text ? (
+                            <Box  sx={{ justifyContent: 'flex-end', margin: '5px', marginTop:'10px', display: "block", border:1, padding: '10px', marginLeft:'70px', width: '500px'}}>
+                                <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Box className="chat-container"
+                                         alignItems='right'
+                                         style={{ display: 'flex', justifyContent: 'flex-end' }}
+                                         sx={{
+
+                                             border: '5px solid #666',
+                                             borderRadius: '30px',
+                                             WebkitBorderRadius: '30px',
+                                             width: '200px',
+                                             MozBorderRadius: '30px',
+                                             margin: '40px',
+                                             padding: '10px',
+                                             display: 'inline-block',
+                                             position: 'relative',
+                                             height: 'auto',
+                                             backgroundColor: 'white' }}>
+                                        <Typography>{chats.lastMessage}</Typography>
+                                        <Box
+                                            sx={{
+                                                content: '""',
+                                                position: 'absolute',
+                                                bottom: '-4.6px',
+                                                right: '-3.5px',
+
+                                                borderTop: '20px solid transparent',
+                                                borderRight: '20px solid #666',
+
+                                            }}
+                                        />
+                                    </Box>
+                                </Box>
+                            </Box>
+
+                        ) : (
+                            <Box className="no-chat-container" sx={{ margin: '5px', marginTop:'10px', display: "block", border:1, padding: '10px', marginLeft:'230px', width: '500px'}}>
+                                <p>We're sorry, but no messages are available. Go to the message page to message users</p>
+                            </Box>
+                        )}
 
 
 
