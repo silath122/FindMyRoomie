@@ -32,6 +32,7 @@ function YourProfile(){
     const [age, setAge] = useState("");
     const [bedtime, setBedtime] =useState("");
     const [smoke, setSmoke] =useState("");
+    const [drink, setDrink] =useState("");
     const [etcAllergy, setEtcAlg] =useState("");
     const [pets, setPet] =useState("");
     const [bio, setBio] =useState("");
@@ -78,6 +79,7 @@ function YourProfile(){
                             setCollegeName(surveyData.collegeName)
                             setSchoolYear(surveyData.Year)
                             setAge(surveyData.age)
+                            setDrink(surveyData.age)
                             setBedtime(surveyData.bedtime)
                             setSmoke(surveyData.smoke)
                             setEtcAlg(surveyData.etcAllergy)
@@ -149,7 +151,10 @@ function YourProfile(){
                         {collegeName}
                     </p>
                     <p>
-                        Bio: {bio}
+                        ----Bio----
+                    </p>
+                    <p>
+                    {bio}
                     </p>
                     <button>
                         update profile
@@ -165,6 +170,9 @@ function YourProfile(){
                     </p>
                     <p>
                         Smoke: <b>{smoke}</b>
+                    </p>
+                    <p>
+                        Drink: <b>{drink}</b>
                     </p>
                     <p>
                         Listed Allergies: <b>{etcAllergy}</b>
