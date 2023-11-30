@@ -138,7 +138,7 @@ const sendPasswordReset = async (email) => {
 const createUserChatsDocument = async (userId, name) => {
     try {
         const userChatsRef = doc(firestore, "userChats", userId);
-       
+
 
         const chatData = {};
 

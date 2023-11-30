@@ -160,6 +160,12 @@ export default function Matches() {
 
             const chatID1 = currentUser.uid > otherUser.uid ? currentUser.uid + otherUser.uid : otherUser.uid + currentUser.uid;
 
+            const chatUserRef = doc(firestore, "chats", chatID1);
+            const messages = [];
+            await setDoc(chatUserRef, {messages});
+
+
+
             if (otherUserData) {
                 // Construct the otherUser object with the necessary properties
                 const otherUserInfo = {
