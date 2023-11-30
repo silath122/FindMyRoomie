@@ -79,7 +79,7 @@ function YourProfile(){
                             setCollegeName(surveyData.collegeName)
                             setSchoolYear(surveyData.Year)
                             setAge(surveyData.age)
-                            setDrink(surveyData.age)
+                            setDrink(surveyData.drink)
                             setBedtime(surveyData.bedtime)
                             setSmoke(surveyData.smoke)
                             setEtcAlg(surveyData.etcAllergy)
@@ -153,9 +153,6 @@ function YourProfile(){
                     <p>
                     Bio: {bio}
                     </p>
-                    <button>
-                        update profile
-                    </button>
                 </div>
 
                 <div className='flex-survey'>
@@ -198,9 +195,11 @@ function YourProfile(){
                     <p>
                         Number of roommates: <b>{numberRoommates}</b>
                     </p>
+                    <a href = "http://localhost:3000/survey">
                     <button>
                         edit roommate preferences
                     </button>
+                    </a>
                 </div>
 
 
