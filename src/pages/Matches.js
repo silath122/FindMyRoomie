@@ -64,13 +64,13 @@ export default function Matches() {
                             const surveyData = surveyDoc.data();
 
                             if (userData && surveyData) {
-                                const matchPercentage = calculateMatchPercetage(formData, surveyData);
+                                //const matchPercentage = calculateMatchPercetage(formData, surveyData);
                                 const fetchedMatch = {
                                     uid: userData.uid,
                                     name: userData.name,
                                     profileImage: userData.profileImage,
                                     bio: surveyData.surveyData.bio,
-                                    matchPercentage: matchPercentage,
+                                    //matchPercentage: matchPercentage,
                                 };
                                 fetchedMatches.push(fetchedMatch);
                             }
@@ -99,11 +99,11 @@ export default function Matches() {
             studyAmount: {'0-1 hour(s)': 1, '2-3 hours': 2, '3-4 hours': 3, '4+ hours':4},
             bedtime: {'before 10': 1, '10-11': 2, 'midnight': 3, 'after midnight': 4},
             wakeup: {'before 6': 1, '7-8': 2, '9-10': 3, '11 or later': 4},
-            friendliness,
-            cleanliness,
-            closeness,
-            workhours,
-            roommateamount,
+            // friendliness,
+            // cleanliness,
+            // closeness,
+            // workhours,
+            // roommateamount,
 
             // Add more survey questions and choices as needed
         };
