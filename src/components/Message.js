@@ -26,8 +26,8 @@ const Message = ({message}) => {
       <div className="messageInfo">
         <img
           src={message.senderID === currentUser.uid
-            ? currentUser.photoURL
-            : data.user.photoURL}
+            ? currentUser.profileImage
+            : data.user.profileImage}
           alt="" />
       </div>
       <div className="messageContent">
