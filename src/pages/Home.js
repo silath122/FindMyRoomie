@@ -19,7 +19,7 @@ import {
 import {Col} from "react-bootstrap";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth, firestore} from "../firebase";
-import {collection, getDocs, query, where,} from "firebase/firestore";
+import {collection, getDocs, query, where, orderBy,limit} from "firebase/firestore";
 import Navbar from "../components/Navbar";
 
 
@@ -33,7 +33,22 @@ export default function Home() {
         navigate ("/messages");
     };
     const chats = collection(firestore, "userChats");
-    const lastMessage = chats?.text || "We're sorry, but no messages are available. Go to the message page to message users";
+    const lastText = query(chats,
+        orderBy("date", "asc"),
+        limit(1));
+    //const lastMessage = chats?.text || "We're sorry, but no messages are available. Go to the message page to message users";
+
+    getDocs(lastText)
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const lastMessage = doc.data().lastMessage;
+
+                console.log("Last text message:", lastMessage.text);
+            });
+        })
+        .catch((error) => {
+            console.error("Error getting documents: ", error);
+        });
 
     console.log("chats= ", chats.lastMessage);
     const fetchUserName = async () => {
@@ -186,56 +201,56 @@ export default function Home() {
                     </Box>
 
 
-                <Box style={{
+                {/*<Box style={{*/}
 
-                    paddingLeft: '150px',
-                    paddingBottom:'30px'
-                }}>
-                    <div>Your latest message:</div>
+                {/*    paddingLeft: '150px',*/}
+                {/*    paddingBottom:'30px'*/}
+                {/*}}>*/}
+                {/*    <div>Your latest message:</div>*/}
 
-                </Box>
+                {/*</Box>*/}
 
-                        {chats && chats.lastMessage && chats.lastMessage.text ? (
-                            <Box  sx={{ justifyContent: 'flex-end', margin: '5px', marginTop:'10px', display: "block", border:1, padding: '10px', marginLeft:'70px', width: '500px'}}>
-                                <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                    <Box className="chat-container"
-                                         alignItems='right'
-                                         style={{ display: 'flex', justifyContent: 'flex-end' }}
-                                         sx={{
+                        {/*{chats && chats.lastMessage ? (*/}
+                        {/*    <Box  sx={{ justifyContent: 'flex-end', margin: '5px', marginTop:'10px', display: "block", border:1, padding: '10px', marginLeft:'70px', width: '500px'}}>*/}
+                        {/*        <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>*/}
+                        {/*            <Box className="chat-container"*/}
+                        {/*                 alignItems='right'*/}
+                        {/*                 style={{ display: 'flex', justifyContent: 'flex-end' }}*/}
+                        {/*                 sx={{*/}
 
-                                             border: '5px solid #666',
-                                             borderRadius: '30px',
-                                             WebkitBorderRadius: '30px',
-                                             width: '200px',
-                                             MozBorderRadius: '30px',
-                                             margin: '40px',
-                                             padding: '10px',
-                                             display: 'inline-block',
-                                             position: 'relative',
-                                             height: 'auto',
-                                             backgroundColor: 'white' }}>
-                                        <Typography>{chats.lastMessage}</Typography>
-                                        <Box
-                                            sx={{
-                                                content: '""',
-                                                position: 'absolute',
-                                                bottom: '-4.6px',
-                                                right: '-3.5px',
+                        {/*                     border: '5px solid #666',*/}
+                        {/*                     borderRadius: '30px',*/}
+                        {/*                     WebkitBorderRadius: '30px',*/}
+                        {/*                     width: '200px',*/}
+                        {/*                     MozBorderRadius: '30px',*/}
+                        {/*                     margin: '40px',*/}
+                        {/*                     padding: '10px',*/}
+                        {/*                     display: 'inline-block',*/}
+                        {/*                     position: 'relative',*/}
+                        {/*                     height: 'auto',*/}
+                        {/*                     backgroundColor: 'white' }}>*/}
+                        {/*                <Typography>{chats.lastMessage}</Typography>*/}
+                        {/*                <Box*/}
+                        {/*                    sx={{*/}
+                        {/*                        content: '""',*/}
+                        {/*                        position: 'absolute',*/}
+                        {/*                        bottom: '-4.6px',*/}
+                        {/*                        right: '-3.5px',*/}
 
-                                                borderTop: '20px solid transparent',
-                                                borderRight: '20px solid #666',
+                        {/*                        borderTop: '20px solid transparent',*/}
+                        {/*                        borderRight: '20px solid #666',*/}
 
-                                            }}
-                                        />
-                                    </Box>
-                                </Box>
-                            </Box>
+                        {/*                    }}*/}
+                        {/*                />*/}
+                        {/*            </Box>*/}
+                        {/*        </Box>*/}
+                        {/*    </Box>*/}
 
-                        ) : (
-                            <Box className="no-chat-container" sx={{ margin: '5px', marginTop:'10px', display: "block", border:1, padding: '10px', marginLeft:'230px', width: '500px'}}>
-                                <p>We're sorry, but no messages are available. Go to the message page to message users</p>
-                            </Box>
-                        )}
+                        {/*) : (*/}
+                        {/*    <Box className="no-chat-container" sx={{ margin: '5px', marginTop:'10px', display: "block", border:1, padding: '10px', marginLeft:'230px', width: '500px'}}>*/}
+                        {/*        <p>We're sorry, but no messages are available. Go to the message page to message users</p>*/}
+                        {/*    </Box>*/}
+                        {/*)}*/}
 
 
 

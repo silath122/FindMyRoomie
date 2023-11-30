@@ -70,7 +70,7 @@ export default function Matches() {
                                     name: userData.name,
                                     profileImage: userData.profileImage,
                                     bio: surveyData.surveyData.bio,
-                                    matchPercentage: matchPercentage,
+                                    //matchPercentage: matchPercentage,
                                 };
                                 fetchedMatches.push(fetchedMatch);
                             }
