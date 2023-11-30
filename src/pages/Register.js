@@ -11,7 +11,7 @@ import {
 } from "../firebase";
 import "../styling/Register.css";
 import Typography from "@mui/material/Typography";
-import placeholderImage from "C:/Users/silat/OneDrive/CSCI 362/find-my-roomie/src/pictures/imagePlaceholder.jpg"
+import placeholderImage from "../pictures/imagePlaceholder.jpg"
 
 function Register() {
     const [email, setEmail] = useState("");
