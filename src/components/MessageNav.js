@@ -6,7 +6,7 @@ import "../styling/DirectMessage.css"
 const MessageNav = () => {
     return(
         <div className="messageNav">
-            <Search/>
+            {/* <Search/> */}
             <Chats/>
         </div>
         

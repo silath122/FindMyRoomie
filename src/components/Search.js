@@ -38,22 +38,22 @@ const Search = () =>{
             if(!res.exists()){
                 await setDoc(doc(firestore,"chats",combinedId), {messages: [] });
                 console.log(res)
-                await updateDoc(doc(firestore, "userChats", currentUser.uid),{
-                    [combinedId+".userInfo"]:{
-                        uid: user.uid,
-                        name: user.name,
-                        photoURL: user.photoURL
+                let doc = getDoc(firestore, "userChats", currentUser.uid);
+                const test = {
+                    id: currentUser.uid,
+                    date: serverTimestamp(),
+                    lastMessage: {
+                        text: ""
                     },
-                    [combinedId+".date"]: serverTimestamp()
-                });
-                await updateDoc(doc(firestore, "userChats", user.uid),{
-                    [combinedId+".userInfo"]:{
-                        uid:currentUser.uid,
-                        name: currentUser.name,
-                        photoURL: currentUser.photoURL
-                    },
-                    [combinedId+".date"]: serverTimestamp(),
-                });
+                    userInfo: {
+                        displayName: user.uid,
+                        photoURL: "",
+                        uid: user.uid
+                    }
+                }
+                doc.push(test)
+                
+                //Do same for other user if above works
             }
 
             
