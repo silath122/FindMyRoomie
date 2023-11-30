@@ -6,23 +6,46 @@ import {
     auth,
     registerWithEmailAndPassword,
     signInWithGoogle,
-    firestore
+    firestore,
+    storage,
 } from "../firebase";
 import "../styling/Register.css";
 import Typography from "@mui/material/Typography";
+import placeholderImage from "C:/Users/silat/OneDrive/CSCI 362/find-my-roomie/src/pictures/imagePlaceholder.jpg"
 
 function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const [profileImage, setProfileImage] = useState(null);
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
 
     const register = () => {
-        if (!name) alert("Please enter name");
-        registerWithEmailAndPassword(name, email, password);
+        if (!name || !profileImage) {
+            alert("Please enter name and upload a profile image");
+            return;
+        }
+        registerWithEmailAndPassword(name, email, password, profileImage);
         navigate ("/survey");
     };
+
+    const handleImageUpload = (image1) => {
+        const file = image1.target.files[0];
+        if (file) {
+            // preview image when uploaded
+            const reader = new FileReader();
+            reader.onload = (image1) => {
+                setProfileImage(file);
+    
+                // Display the image preview
+                document.getElementById("imagePreview").src = image1.target.result;
+    
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+    
 
     useEffect(() => {
         if (loading) return;
@@ -47,15 +70,25 @@ function Register() {
     return (
         <div className = "register">
         <div className="register__container">
-            <img
-                src={require("../pictures/FindMyRoomieLogo.png")}
-                alt="FindMyRoomie"
-                className="logo"
-                sx={{ align: 'center', marginLeft: '10px' }}
-            />
+            <div className="circular_image_frame">
+                <img
+                    id="imagePreview"
+                    src={profileImage ? URL.createObjectURL(profileImage) : placeholderImage}
+                    alt="Profile Preview"
+                    className="circular_image"
+                />
+            </div>
+            <div className="text1">
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                />
+            </div>
             <Typography color= 'white' fontSize='20px' sx ={{paddingBottom:'10px'}}>
                 Register for FindMyRoomie
             </Typography>
+            
             <div className="text1">
                 <input
                     type="text"
@@ -99,9 +132,10 @@ function Register() {
                     </Typography><Link to="/" className="login__tab">Login now</Link>
                 </div>
 
-        </div>
+            </div>
         </div>
     );
 }
 
 export default Register;
+

@@ -1,10 +1,10 @@
 import "../styling/Profile.css"
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Navbar from "../components/Navbar";
 import Grid from "@mui/material/Grid";
 import Sidebar from "../Sidebar";
-import {collection, getDocs, query, where} from "firebase/firestore";
-import {firestore} from "../firebase";
+import {collection, getDocs, query, where, doc, getDoc} from "firebase/firestore";
+import {firestore, auth} from "../firebase";
 import {getAuth, onAuthStateChanged} from 'firebase/auth';
 
 
@@ -43,98 +43,72 @@ function YourProfile(){
     const [cleanness, setCleanness]= useState(0);
     const [closeness, setCloseness]= useState(0);
     const [extroverted, setExtroveted]= useState(0);
+    const [profileImage, setProfileImage] = useState("");
     // Initialize Firestore
 
-    // user id
     const auth = getAuth();
-    
-    // check if user is authenticated and logged in before query
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const userId = user.uid;
 
-            const surveysCollection = collection(firestore, "surveys");
-            console.log("survey collection: ", surveysCollection);
-            // Now you can user userId to query the user's survey data
-            const q = query(surveysCollection, where('uid', '==', userId));
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const userId = user.uid;
 
-            // execute query
-            getDocs(q)
-                .then((querySnapshot) => {
-                //loop through specific users answers and look at "survey data" field
-                    querySnapshot.forEach((doc) => {
-                        const surveyData = doc.data().surveyData;
-                        setFullName(surveyData.fullName)
-                        setCollegeName(surveyData.collegeName)
-                        setFullName(surveyData.fullName)
-                        setCollegeName(surveyData.collegeName)
-                        setSchoolYear(surveyData.Year)
-                        setAge(surveyData.age)
-                        setBedtime(surveyData.bedtime)
-                        setSmoke(surveyData.smoke);
-                        setEtcAlg(surveyData.etcAllergy);
-                        setPet(surveyData.pets);
-                        setStudyHours(surveyData.studyHours)
-                        setBio(surveyData.bio)
-                        setSchoolYear(surveyData.year)
-                        setNumberRoommates(surveyData["number-of-roommates"])
-                        setCleanness(surveyData.qualities.cleanness)
-                        setCloseness(surveyData.qualities.closeness)
-                        setExtroveted(surveyData.qualities.extroverted)
-                        setWakeup(surveyData.wakeUpTime)
-                        setWorkAmount(surveyData["work-amount"])
+                const userRef = doc(firestore, "users", userId);
+                getDoc(userRef)
+                    .then((docSnapshot) => {
+                        if (docSnapshot.exists()) {
+                            const userData = docSnapshot.data();
+                            setProfileImage(userData.profileImage);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error getting user data:", error);
                     });
-                })
-                .catch((error) => {
-                    console.error("Error getting survey data:", error);
-                });
-        } else {
-            console.log('User is signed out');
-        }
-    });
+
+                const surveysCollection = collection(firestore, "surveys");
+                const q = query(surveysCollection, where('uid', '==', userId));
+
+                getDocs(q)
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            const surveyData = doc.data().surveyData;
+                            setFullName(surveyData.fullName)
+                            setCollegeName(surveyData.collegeName)
+                            setFullName(surveyData.fullName)
+                            setCollegeName(surveyData.collegeName)
+                            setSchoolYear(surveyData.Year)
+                            setAge(surveyData.age)
+                            setBedtime(surveyData.bedtime)
+                            setSmoke(surveyData.smoke)
+                            setEtcAlg(surveyData.etcAllergy)
+                            setPet(surveyData.pets)
+                            setStudyHours(surveyData.studyHours)
+                            setBio(surveyData.bio)
+                            setSchoolYear(surveyData.year)
+                            setNumberRoommates(surveyData["number-of-roommates"])
+                            setCleanness(surveyData.qualities.cleanness)
+                            setCloseness(surveyData.qualities.closeness)
+                            setExtroveted(surveyData.qualities.extroverted)
+                            setWakeup(surveyData.wakeUpTime)
+                            setWorkAmount(surveyData["work-amount"])
+                        });
+                    })
+                    .catch((error) => {
+                        console.error("Error getting survey data:", error);
+                    });
+            } else {
+                console.log('User is signed out');
+            }
+        });
+
+        return () => unsubscribe();
+    }, [auth]);
     
-    //TODO: change to use userSurveys collection inside the users collection.
-    //was calling the surveys collection to be parsed
-
-    function uploadProfilePicture() {
-        const fileInput = document.getElementById('imageUpload');
-        const preview = document.getElementById('preview');
-        const profileImage = document.getElementById('profileImage');
-
-        const file = fileInput.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                const img = new Image();
-                img.src = e.target.result;
-
-                img.onload = function () {
-                    // Display the uploaded image in the preview div
-                    preview.innerHTML = '';
-                    preview.appendChild(img);
-
-                    // Update the profile image
-                    profileImage.src = e.target.result;
-                };
-            };
-
-            reader.readAsDataURL(file);
-        }
-    }
-    function loadFile(event) {
-        const output = document.getElementById('output');
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function() {
-            URL.revokeObjectURL(output.src) // free memory
-        }
-    };
-
+    
     return(
         // upload and delete image function
         // connect to survey and show results, as well as allow editing of survey answers
-        <div class = "yourProfile">
+        <div className = "yourProfile">
             <Navbar/>
 
                 <Grid container spacing={2}>
@@ -148,18 +122,18 @@ function YourProfile(){
             <div className='flex-container'>
 
 
-                <div class = 'flex-survey'>
+                <div className= 'flex-survey'>
                     <img sx={{paddingTop:'-5px'}}
-                         src={require("../pictures/imagePlaceholder.jpg")}
+                         src={profileImage || require("../pictures/imagePlaceholder.jpg")}
                          alt="FindMyRoomie"
                          id="output"
-                         className="logo"/>
+                         className="logo1"/>
                     <div id="profile-picture-container">
 
                     </div>
-                    <input id="imageUpload" type="file"
+                    {/* <input id="imageUpload" type="file"
                            name="profile_photo" placeholder="Photo" required="" capture></input>
-                    <input type="file" accept="image/*" onChange={loadFile}/>
+                    <input type="file" accept="image/*" onChange={loadFile}/> */}
 
 
                     <p>
@@ -169,7 +143,7 @@ function YourProfile(){
                         padberga@g.cofc.edu
                     </p> */}
                      <p>
-                         <b> schoolYear: {schoolYear} </b>
+                        School Year: <b> {schoolYear} </b>
                     </p>
                     <p>
                         {collegeName}

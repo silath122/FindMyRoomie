@@ -11,7 +11,7 @@
 .flex-btn {
 
     display: flex;
-    align-item: center;
+    align-items: center;
     justify-content: center;
     font-size: 18px;
     margin-top: 10px;
@@ -34,7 +34,7 @@
 }
 .flex-user img{
     align-self: center;
-    height: 26%;
+    height: 30%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
@@ -42,7 +42,7 @@
 .flex-survey
 {
 
-    align-item: center;
+    align-items: center;
     justify-content: center;
     background-color: #ffffff;
     width: 500px;
@@ -55,7 +55,7 @@
 .flex-item
 {
 
-    align-item: center;
+    align-items: center;
     justify-content: center;
     background-color: #ffffff;
     width: 500px;
@@ -68,7 +68,7 @@
 .flex-user
 {
 
-    align-item: center;
+    align-items: center;
     justify-content: center;
     background-color: #ffffff;
     width: 500px;
@@ -83,18 +83,25 @@
     width: 150px;
     height: 150px;
     overflow: hidden;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
     border-radius: 50%;
+    margin: 10px;
 }
+
+.logo1 {
+    width: 50%;
+    height: auto;
+}
+
 #imageUpload
 {
     display: none;
 }
 
 #profileImage
-{
+{  
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+    border-radius: 50%;
     cursor: pointer;
 }

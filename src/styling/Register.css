@@ -65,3 +65,20 @@
 
 }
 
+.circular_image_frame {
+    max-width: 200px; 
+    max-height: 200px; 
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 10px auto;
+}
+
+.circular_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-radius: 50%; /* makes the image circular */
+    display: block;
+    margin: 0 auto;
+}
+
