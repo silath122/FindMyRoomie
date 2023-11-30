@@ -151,7 +151,7 @@ function YourProfile(){
                         {collegeName}
                     </p>
                     <p>
-                        ----Bio----
+                        Bio: {bio}
                     </p>
                     <p>
                     {bio}
