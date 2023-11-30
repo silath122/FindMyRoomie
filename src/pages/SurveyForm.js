@@ -124,16 +124,16 @@ const surveyJson = {
             type: "dropdown",
             isRequired: "true",
             "choices": [{
-                "value": "0-1 hour(s)",
+                "value": "0-1",
                 "text": "0-1 hours"
             }, {
-                "value": "2-3 hours",
+                "value": "2-3",
                 "text": "2-3 hours"
             }, {
-                "value": "3-4 hours",
+                "value": "3-4",
                 "text": "3-4 hours"
             }, {
-                "value": "4+ hours",
+                "value": "4+",
                 "text": "4+ hours"
             }]
         },
