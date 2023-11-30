@@ -151,10 +151,7 @@ function YourProfile(){
                         {collegeName}
                     </p>
                     <p>
-                        Bio: {bio}
-                    </p>
-                    <p>
-                    {bio}
+                    Bio: {bio}
                     </p>
                     <button>
                         update profile
