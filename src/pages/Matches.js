@@ -64,7 +64,7 @@ export default function Matches() {
                             const surveyData = surveyDoc.data();
 
                             if (userData && surveyData) {
-                                const matchPercentage = calculateMatchPercetage(formData, surveyData);
+                                const matchPercentage = 77;//calculateMatchPercentage(surveyData.currUserId, surveyData.otherUserId);
                                 const fetchedMatch = {
                                     uid: userData.uid,
                                     name: userData.name,
@@ -89,61 +89,60 @@ export default function Matches() {
         }
     }, [currentUser, loading]);
 
-    const calculateMatchPercentage = (currentUserSurvey, otherUserSurvey) => {
-        // Define weights for different survey questions and choices
-        const weights = {
-            grade: {freshman: 1, sophmore: 2, junior: 3, senior: 4},
-            smoke: { yes: 2, no: 1 },
-            drink: { socially: 2, never: 1, 'once or twice a week': 3, 'More than twice a week': 4}, 
-            pets: { yes: 2, no: 1 },
-            studyAmount: {'0-1 hour(s)': 1, '2-3 hours': 2, '3-4 hours': 3, '4+ hours':4},
-            bedtime: {'before 10': 1, '10-11': 2, 'midnight': 3, 'after midnight': 4},
-            wakeup: {'before 6': 1, '7-8': 2, '9-10': 3, '11 or later': 4},
-            friendliness,
-            cleanliness,
-            closeness,
-            workhours,
-            roommateamount,
+    // const calculateMatchPercentage = async (currentUserSurvey, otherUserSurvey) => {
+    //     // Define weights for different survey questions and choices
+    //     const weights = {
+    //         grade: {freshman: 1, sophmore: 2, junior: 3, senior: 4},
+    //         smoke: { yes: 2, no: 1 },
+    //         drink: { socially: 2, never: 1, 'once or twice a week': 3, 'More than twice a week': 4}, 
+    //         pets: { yes: 2, no: 1 },
+    //         studyAmount: {'0-1 hour(s)': 1, '2-3 hours': 2, '3-4 hours': 3, '4+ hours':4},
+    //         bedtime: {'before 10': 1, '10-11': 2, 'midnight': 3, 'after midnight': 4},
+    //         wakeup: {'before 6': 1, '7-8': 2, '9-10': 3, '11 or later': 4},
+    //         friendliness: {1: 1, 2: 2, 3: 3, 4: 4, 5: 5},
+    //         cleanliness: {1: 1, 2: 2, 3: 3, 4: 4, 5: 5},
+    //         closeness: {1: 1, 2: 2, 3: 3, 4: 4, 5: 5},
+    //         workhours: {'dont': 1, '5-10': 2, '11-20': 3, '21-30': 4, 'full time': 5},
+    //         roommateamount: {'1': 1, '2': 2, '3': 3, '4 or more': 4},
 
-            // Add more survey questions and choices as needed
-        };
+    //     };
     
-        // Calculate the weighted sum of the choices
-        let weightedSum = 0;
+    //     // Calculate the weighted sum of the choices
+    //     let weightedSum = 0;
     
-        for (const question in weights) {
-            if (currentUserSurvey[question] && otherUserSurvey[question]) {
-                const currentUserResponse = currentUserSurvey[question];
-                const otherUserResponse = otherUserSurvey[question];
-                const weight = weights[question];
+    //     for (const question in weights) {
+    //         if (currentUserSurvey[question] && otherUserSurvey[question]) {
+    //             const currentUserResponse = currentUserSurvey[question];
+    //             const otherUserResponse = otherUserSurvey[question];
+    //             const weight = weights[question];
     
-                // You may need to customize this based on the type of question (multiple-choice, dropdown, etc.)
-                const currentUserWeight = weight[currentUserResponse] || 0;
-                const otherUserWeight = weight[otherUserResponse] || 0;
+    //             // You may need to customize this based on the type of question (multiple-choice, dropdown, etc.)
+    //             const currentUserWeight = weight[currentUserResponse] || 0;
+    //             const otherUserWeight = weight[otherUserResponse] || 0;
     
-                weightedSum += Math.abs(currentUserWeight - otherUserWeight);
-            }
-        }
+    //             weightedSum += Math.abs(currentUserWeight - otherUserWeight);
+    //         }
+    //     }
     
-        // Normalize the result to get a percentage
-        const maxPossibleWeight = Object.values(weights).reduce(
-            (acc, weight) =>
-                acc +
-                (typeof weight === 'number'
-                    ? weight
-                    : Object.values(weight).reduce((choiceAcc, choiceWeight) => choiceAcc + choiceWeight, 0)),
-            0
-        );
-        const matchPercentage = Math.max(0, 100 - (weightedSum / maxPossibleWeight) * 100);
+    //     // Normalize the result to get a percentage
+    //     const maxPossibleWeight = Object.values(weights).reduce(
+    //         (acc, weight) =>
+    //             acc +
+    //             (typeof weight === 'number'
+    //                 ? weight
+    //                 : Object.values(weight).reduce((choiceAcc, choiceWeight) => choiceAcc + choiceWeight, 0)),
+    //         0
+    //     );
+    //     const matchPercentage = Math.max(0, 100 - (weightedSum / maxPossibleWeight) * 100);
     
-        return matchPercentage;
-    };
+    //     return matchPercentage;
+    // };
 
 
-    // method logs all matches and see's the contains of each match in the console.log
-    useEffect(() => {
-        console.log("Matches:", matches);
-    }, [matches]);
+    // // method logs all matches and see's the contains of each match in the console.log
+    // useEffect(() => {
+    //     console.log("Matches:", matches);
+    // }, [matches]);
 
 
     const message = async (currentUser, otherUser) => {
@@ -159,8 +158,7 @@ export default function Matches() {
             const currentUserDoc = await getDoc(currentUserDocRef);
             const currentUserData = currentUserDoc.data();
 
-            const chatID1 = `${currentUser.uid}${otherUser.uid}`;
-            const chatID2 = `${otherUser.uid}${currentUser.uid}`;
+            const chatID1 = currentUser.uid > otherUser.uid ? currentUser.uid + otherUser.uid : otherUser.uid + currentUser.uid;
 
             if (otherUserData) {
                 // Construct the otherUser object with the necessary properties
@@ -194,7 +192,7 @@ export default function Matches() {
                 const timestamp = new Date();
     
                 // Update or create the document in userChats for the other user
-                await updateOrCreateUserChat(otherUser.uid, chatID2, timestamp, currentUserInfo);
+                await updateOrCreateUserChat(otherUser.uid, chatID1, timestamp, currentUserInfo);
 
                 console.log("Message button successfully implemented for currentUser");
                 
@@ -218,7 +216,7 @@ export default function Matches() {
                 console.error("Other user data not found: ", otherUser.uid);
             }
 
-            //navigate("/messages");
+            navigate("/messages");
 
         
         } catch (error) {
