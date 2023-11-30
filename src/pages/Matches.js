@@ -65,10 +65,12 @@ export default function Matches() {
                             const surveyData = surveyDoc.data();
 
                             if (userData && surveyData) {
-                                const matchPercentage = await calculateMatchPercentage (
-                                    surveyData.currUserId,
-                                    surveyData.otherUserId
-                                );
+                                // const matchPercentage = await calculateMatchPercentage (
+                                //     surveyData.currUserId,
+                                //     surveyData.otherUserId
+                                // );
+
+                                const matchPercentage = Math.floor(Math.random() * 100) + 1;
 
                                 const fetchedMatch = {
                                     uid: userData.uid,
@@ -126,7 +128,8 @@ export default function Matches() {
             weightedSum += Math.abs(currentUserWeight - otherUserWeight);
         }
     
-        const maxPossibleWeight = Object.values(weights).reduce(
+        const maxPossibleWeight = Object.values
+        (weights).reduce(
             (acc, weight) =>
                 acc +
                 (typeof weight === 'number'
@@ -342,7 +345,8 @@ export default function Matches() {
                     <div>
                         <Typography sx={{ fontFamily: 'Segoe UI Symbol',fontSize:'30px', paddingLeft: '115px'}}> Your Matches</Typography>
                     </div>
-                        {matches.map((match, index) => (
+                        {matches.sort((a, b) => b.matchPercentage - a.matchPercentage)
+                                .map((match, index) => (
                             <Card
                                 key={index}
                                 sx={{ width: 600, Height: 200, align: 'center', marginTop: '10px' }}
