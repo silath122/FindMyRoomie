@@ -39,13 +39,13 @@ const Chats = () =>{
                 {chats &&
                     Object.entries(chats).map( (chat) => {
                         console.log(chat);
-                        console.log(chat[1].userInfo.photoURL);
+                        console.log(chat[1].userInfo.profileImage);
                       return(
                       <div className="userChat" 
                         key={chat[0]}
                         onClick={() => handleSelect(chat[1].userInfo)}
                         >
-                        <img src={(chat[1].userInfo.photoURL)} alt="" />
+                        <img src={(chat[1].userInfo.profileImage)} alt="" />
                         <div className="userChatInfo">
                           <span>{(chat[1].userInfo.displayName)}</span>
                           <p>{(chat[1].lastMessage?.text)}</p>

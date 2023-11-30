@@ -138,23 +138,29 @@ const sendPasswordReset = async (email) => {
 const createUserChatsDocument = async (userId, name) => {
     try {
         const userChatsRef = doc(firestore, "userChats", userId);
-        const timestamp = new Date();
+       
 
-        // Specify the structure for the userChats document
-        const chatData = {
-            date: timestamp,
-            lastMessage: {
-                text: "test", // Not sure what to put here - talk to Carter (Siah)
-            },
-            userInfo: {
-                name: name,
-                photoImage: "test", // need to implement adding photo functionality
-                uid: userId,
-            },
-        };
+        const chatData = {};
 
-        // set doc to chatData structure
         await setDoc(userChatsRef, chatData);
+        // const userChatsRef = doc(firestore, "userChats", userId);
+        // const timestamp = new Date();
+
+        // // Specify the structure for the userChats document
+        // const chatData = {
+        //     date: timestamp,
+        //     lastMessage: {
+        //         text: "test", // Not sure what to put here - talk to Carter (Siah)
+        //     },
+        //     userInfo: {
+        //         name: name,
+        //         photoImage: "test", // need to implement adding photo functionality
+        //         uid: userId,
+        //     },
+        // };
+
+        // // set doc to chatData structure
+        // await setDoc(userChatsRef, chatData);
 
         console.log("UserChats document created sucessfully for user: " + userId);
 
