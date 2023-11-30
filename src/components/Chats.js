@@ -17,7 +17,6 @@ const Chats = () =>{
             const unsub = onSnapshot(doc(firestore,"userChats", currentUser.uid), (doc) =>{
                 setChats(doc.data())
             })
-    
             return ()=>{
                 unsub();
             }

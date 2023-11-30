@@ -29,7 +29,6 @@ const Message = ({message}) => {
             ? currentUser.photoURL
             : data.user.photoURL}
           alt="" />
-        <span>just now</span>
       </div>
       <div className="messageContent">
         <p>{message.content}</p>
