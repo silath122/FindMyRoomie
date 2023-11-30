@@ -124,7 +124,7 @@ const surveyJson = {
             type: "dropdown",
             isRequired: "true",
             "choices": [{
-                "value": "0-1",
+                "value": "0-1 hour(s)",
                 "text": "0-1 hours"
             }, {
                 "value": "2-3 hours",
@@ -133,7 +133,7 @@ const surveyJson = {
                 "value": "3-4 hours",
                 "text": "3-4 hours"
             }, {
-                "value": "4+",
+                "value": "4+ hours",
                 "text": "4+ hours"
             }]
         },
@@ -149,7 +149,7 @@ const surveyJson = {
                 "value": "10-11",
                 "text": "10-11 pm"
             }, {
-                "value": "midgnight",
+                "value": "midnight",
                 "text": "midnight"
             }, {
                 "value": "after midnight",
@@ -163,7 +163,7 @@ const surveyJson = {
             isRequired: "true",
             "choices": [{
                 "value": "before 6",
-                "text": "before 6"
+                "text": "before 6 am"
             }, {
                 "value": "7-8",
                 "text": "7-8 am"
@@ -172,7 +172,7 @@ const surveyJson = {
                 "text": "9-10 am"
             }, {
                 "value": "11 or later",
-                "text": "11 or later"
+                "text": "11 am or later"
             }]
         },
         {

@@ -10,8 +10,8 @@ import Toastify from 'toastify-js'
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useState, useEffect } from "react";
-import {firestore, removeMatchFromFirestore, getUserDataByUID} from "../firebase";
-import {updateDoc, setDoc, doc, getDoc} from "firebase/firestore";
+import {firestore} from "../firebase";
+import {updateDoc, setDoc, doc, getDoc, getFirestore, arrayRemove} from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function Matches() {
@@ -20,7 +20,6 @@ export default function Matches() {
     const [loading, setLoading] = useState(true);
     const [matches, setMatches] = useState([]);
 
-
     useEffect(() => {
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -28,76 +27,200 @@ export default function Matches() {
             setLoading(false);
         });
 
-        return() => unsubscribe();
+        return () => unsubscribe();
     }, []);
 
     useEffect(() => {
         const fetchMatches = async () => {
-          try {
-            if (currentUser) {
-              const currUserId = currentUser.uid;
-              const matchRef = doc(firestore, "matches", currUserId);
-      
-              // Fetch the document reference
-              const matchDoc = await getDoc(matchRef);
-      
-              // Check if the document exists
-              if (matchDoc.exists()) {
-                // Access the data property of the document
-                const matchesData = matchDoc.data();
-      
-                // Initialize an array to store fetched matches
-                const fetchedMatches = [];
-      
-                // Loop through each field in the matches map
-                for (const [otherUserId, matchData] of Object.entries(matchesData.matches || {})) {
-                  if (matchData.status !== "not interested") {
-                    const randomMatchPercentage = Math.floor(Math.random() * 100) + 1;
-      
-                    const userDoc = await firestore.collection("users").doc(otherUserId).get();
-                    const userData = userDoc.data();
-      
-                    if (userData) {
-                      const fetchedMatch = {
-                        uid: otherUserId, // Assuming otherUserId is the UID of the different user
-                        name: userData.name,
-                        profileImage: userData.profileImage,
-                        matchPercentage: randomMatchPercentage,
-                        bio: userData.bio,
-                      };
-                      fetchedMatches.push(fetchedMatch);
+            try {
+                if (currentUser) {
+                    const currUserId = currentUser.uid;
+                    
+
+                    // get matches document from "matches" collection
+                    const matchRef = doc(firestore, "matches", currUserId);
+                    const matchDoc = await getDoc(matchRef);
+
+                    
+                    if (matchDoc.exists()) {
+                        
+                        const matchesData = matchDoc.data();
+
+                        // check if the "matches" field is an array
+                        if (Array.isArray(matchesData.matches)) {
+                           const fetchedMatches = [];
+
+                           // Loop through each UID in the filter matches
+                           for (const otherUserId of matchesData.matches) {
+
+                            // get user data from "users" collection
+                            const userDocRef = doc(firestore, "users", otherUserId);
+                            const userDoc = await getDoc(userDocRef);
+                            const userData = userDoc.data();
+
+                            // get survey data from "surveys" collection
+                            const surveyDocRef = doc(firestore, "surveys", otherUserId);
+                            const surveyDoc = await getDoc(surveyDocRef);
+                            const surveyData = surveyDoc.data();
+
+                            if (userData && surveyData) {
+                                const matchPercentage = calculateMatchPercetage(formData, surveyData);
+                                const fetchedMatch = {
+                                    uid: userData.uid,
+                                    name: userData.name,
+                                    profileImage: userData.profileImage,
+                                    bio: surveyData.surveyData.bio,
+                                    matchPercentage: matchPercentage,
+                                };
+                                fetchedMatches.push(fetchedMatch);
+                            }
+                           }
+                           setMatches(fetchedMatches);
+                        }
                     }
-                  }
                 }
-      
-                setMatches(fetchedMatches);
-              }
+            } catch (error) {
+                console.error("Error fetching matches:", error);
             }
-          } catch (error) {
-            console.error("Error fetching matches:", error);
-          }
         };
-      
+
         if (!loading && currentUser) {
-          fetchMatches();
+            fetchMatches();
         }
-      }, [currentUser, loading]);
+    }, [currentUser, loading]);
+
+    const calculateMatchPercentage = (currentUserSurvey, otherUserSurvey) => {
+        // Define weights for different survey questions and choices
+        const weights = {
+            grade: {freshman: 1, sophmore: 2, junior: 3, senior: 4},
+            smoke: { yes: 2, no: 1 },
+            drink: { socially: 2, never: 1, 'once or twice a week': 3, 'More than twice a week': 4}, 
+            pets: { yes: 2, no: 1 },
+            studyAmount: {'0-1 hour(s)': 1, '2-3 hours': 2, '3-4 hours': 3, '4+ hours':4},
+            bedtime: {'before 10': 1, '10-11': 2, 'midnight': 3, 'after midnight': 4},
+            wakeup: {'before 6': 1, '7-8': 2, '9-10': 3, '11 or later': 4},
+            friendliness,
+            cleanliness,
+            closeness,
+            workhours,
+            roommateamount,
+
+            // Add more survey questions and choices as needed
+        };
+    
+        // Calculate the weighted sum of the choices
+        let weightedSum = 0;
+    
+        for (const question in weights) {
+            if (currentUserSurvey[question] && otherUserSurvey[question]) {
+                const currentUserResponse = currentUserSurvey[question];
+                const otherUserResponse = otherUserSurvey[question];
+                const weight = weights[question];
+    
+                // You may need to customize this based on the type of question (multiple-choice, dropdown, etc.)
+                const currentUserWeight = weight[currentUserResponse] || 0;
+                const otherUserWeight = weight[otherUserResponse] || 0;
+    
+                weightedSum += Math.abs(currentUserWeight - otherUserWeight);
+            }
+        }
+    
+        // Normalize the result to get a percentage
+        const maxPossibleWeight = Object.values(weights).reduce(
+            (acc, weight) =>
+                acc +
+                (typeof weight === 'number'
+                    ? weight
+                    : Object.values(weight).reduce((choiceAcc, choiceWeight) => choiceAcc + choiceWeight, 0)),
+            0
+        );
+        const matchPercentage = Math.max(0, 100 - (weightedSum / maxPossibleWeight) * 100);
+    
+        return matchPercentage;
+    };
+
+
+    // method logs all matches and see's the contains of each match in the console.log
+    useEffect(() => {
+        console.log("Matches:", matches);
+    }, [matches]);
 
 
     const message = async (currentUser, otherUser) => {
         try {
+
+            // user info on other user
+            const otherUserDocRef = doc(firestore, "users", otherUser.uid);
+            const otherUserDoc = await getDoc(otherUserDocRef);
+            const otherUserData = otherUserDoc.data();
+
+            // current user info
+            const currentUserDocRef = doc(firestore, "users", currentUser.uid);
+            const currentUserDoc = await getDoc(currentUserDocRef);
+            const currentUserData = currentUserDoc.data();
+
             const chatID1 = `${currentUser.uid}${otherUser.uid}`;
             const chatID2 = `${otherUser.uid}${currentUser.uid}`;
+
+            if (otherUserData) {
+                // Construct the otherUser object with the necessary properties
+                const otherUserInfo = {
+                    uid: otherUser.uid,
+                    name: otherUserData.name,
+                    profileImage: otherUserData.profileImage,
+                };
+
+
+                const timestamp = new Date();
     
-            const timestamp = new Date();
+                // Update or create the document in userChats for the current user
+                await updateOrCreateUserChat(currentUser.uid, chatID1, timestamp, otherUserInfo);
     
-            // Update or create the document in userChats for the current user
-            await updateOrCreateUserChat(currentUser.uid, chatID1, timestamp, otherUser);
+
+                console.log("Message button successfully implemented for otherUser");
     
-            // Update or create the document in userChats for the other user
-            await updateOrCreateUserChat(otherUser.uid, chatID2, timestamp, currentUser);
+            } else {
+                console.error("Other user data not found: ", otherUser.uid);
+            }
+
+            if (currentUserData) {
+                // Construct the otherUser object with the necessary properties
+                const currentUserInfo = {
+                    uid: currentUser.uid,
+                    name: currentUserData.name,
+                    profileImage: currentUserData.profileImage,
+                };
+
+                const timestamp = new Date();
     
-            navigate("/messages");
+                // Update or create the document in userChats for the other user
+                await updateOrCreateUserChat(otherUser.uid, chatID2, timestamp, currentUserInfo);
+
+                console.log("Message button successfully implemented for currentUser");
+                
+            } else {
+                console.error("Other user data not found: ", currentUser.uid);
+            }
+
+            
+            if (otherUserData) {
+                // Construct the otherUser object with the necessary properties
+                const otherUserInfo = {
+                    uid: otherUser.uid,
+                    name: otherUserData.name,
+                    profileImage: otherUserData.profileImage,
+                };
+
+                // run once the process of updating userChats is complete
+                await removeMatch(otherUserInfo);
+
+            } else {
+                console.error("Other user data not found: ", otherUser.uid);
+            }
+
+            //navigate("/messages");
+
+        
         } catch (error) {
             console.error("Error sending message:", error);
             
@@ -105,7 +228,10 @@ export default function Matches() {
     };
     
     const updateOrCreateUserChat = async (userID, chatID, timestamp, otherUser) => {
+        try {
         const userChatsRef = doc(firestore, "userChats", userID);
+
+        console.log("userChatsRef:", userChatsRef);
     
         // current userChats doc
         const userChatsDoc = await getDoc(userChatsRef);
@@ -118,11 +244,7 @@ export default function Matches() {
                     lastMessage: {
                         text: "test", // may need to update this <-- carter
                     },
-                    userInfo: {
-                        name: otherUser.name,
-                        profileImage: otherUser.profileImage,
-                        uid: otherUser.uid,
-                    },
+                    userInfo: otherUser,
                 },
             });
         } else {
@@ -133,237 +255,125 @@ export default function Matches() {
                     lastMessage: {
                         text: "test", // may need to update this <-- carter
                     },
-                    userInfo: {
-                        name: otherUser.name,
-                        profileImage: otherUser.profileImage,
-                        uid: otherUser.uid,
-                    },
+                    userInfo: otherUser,
                 },
             });
         }
+        } catch (error) {
+            console.error("Error updating or creating userChats document:", error);
+        }
     };
-
-
-
-    // const [matches, setMatches] = useState([
-    //     {
-    //         name: "Jenna Roux",
-    //         image: require("../pictures/jenna.png"),
-
-    //         bio: "Hi, I'm Jenna! I'm a business major at CofC. I'm looking for two roommates to live with as I go into my Junior year of College.",
-    //         matchPercentage: 73,
-    //     },
-    //     {
-    //         name: "Sophia Jenkins",
-    //         image: require("../pictures/sophia.png"),
-    //         bio: "Hi, I'm Sophia, and I'm a college student in my early twenties majoring in Computer Science. I'm excited about my upcoming semester in a new city and looking forward to making the most of my college experience. I'm friendly, responsible, and eager to find roommates who share similar values and can create a supportive and enjoyable living environment.",
-    //         matchPercentage: 55,
-    //     },
-    //     {
-    //         name: "Sarah Stewart",
-    //         image: require("../pictures/sarah.png"),
-    //         bio: "I'm a college senior majoring in Environmental Science. With a passion for sustainability, I'm excited about my final year and eager to make eco-conscious choices in my new living space. I'm friendly, outgoing, and looking for roommates who value a green lifestyle and enjoy outdoor adventures.",
-    //         matchPercentage: 95,
-    //     },
-    //     {
-    //         name: "Lilly Quinn",
-    //         image: require("../pictures/lilly.png"),
-    //         bio: "I'm a freshman studying Literature and dreaming of becoming a published author someday. I'm a bookworm, an introvert, and I adore cozy evenings with a good book. I'm hoping to find roommates who share my love for literature and appreciate a quiet and book-friendly environment.",
-    //         matchPercentage: 82,
-    //     },
-    // ]);
 
 
     const removeMatch = async (match) => {
         try {
-            await removeMatchFromFirestore(currentUser, match);
-    
-            // update state and to remove match from UI matches page forever
-            const updatedMatches = matches.filter((m) => m.uid !== match.uid);
+            const currentUserId = currentUser.uid;
+            const otherUserId = match.uid;
+
+            console.log("Removing match:", match);
+
+            // remove other users match from the current users "matches" collection
+            const currentUserRef = doc(getFirestore(), "matches", currentUserId);
+            await updateDoc(currentUserRef, {
+                matches: arrayRemove(otherUserId)
+            });
+
+            console.log("Match removed from current user's matches.")
+
+            // remove current users match from other users "matches collection"
+            const otherUserRef = doc(getFirestore(), "matches", otherUserId);
+            await updateDoc(otherUserRef, {
+                matches: arrayRemove(currentUserId)
+            });
+
+            console.log("Current user removed from other user's matches.")
+
+            // update state to remove the match from UI matches page
+            const updatedMatches = matches.filter((m) => m.uid !== otherUserId);
             setMatches(updatedMatches);
+
+            console.log("Matches have all been successfully removed");
+
         } catch (error) {
-            console.error("Error marking match as not interested:", error);
+            console.error("Error deleting match:", error);
         }
     };
 
-    return (
+        return(
         <div>
-            <Navbar maxWidth="lg" />
-            {loading && <p>Loading...</p>}
-            {!loading && currentUser &&(
+            <Navbar   maxWidth="lg"/>
             <Grid container spacing={2}>
                 <Grid item xs={2}>
-                    <Sidebar />
+
+                    <Sidebar/>
+
                 </Grid>
-                <Grid item xs={8} alignItems="center">
-                    <Box
-                        align="center"
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "column",
-                            gap: "10px",
-                        }}
-                    >
-                        <div>
-                            <Typography sx={{ fontFamily: "Segoe UI Symbol", fontSize: "30px", paddingLeft: "115px" }}>
-                                Your Matches
-                            </Typography>
-                        </div>
-                        {matches.length === 0 ? (
-                            <p>No matches found.</p>
-                            ) : (
-                        matches.map((match, index) => (
-                            <Card key={index} sx={{ width: 600, Height: 200, align: "center", marginTop: "10px" }}>
+                <Grid item xs={8}
+                      alignItems="center" >
+                    <Box align= 'center' style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'column', // Center items vertically
+                        gap: '10px',
+
+                    }}>
+                    <div>
+                        <Typography sx={{ fontFamily: 'Segoe UI Symbol',fontSize:'30px', paddingLeft: '115px'}}> Your Matches</Typography>
+                    </div>
+                        {matches.map((match, index) => (
+                            <Card
+                                key={index}
+                                sx={{ width: 600, Height: 200, align: 'center', marginTop: '10px' }}
+                            >
                                 <Box display="flex">
                                     <CardMedia
                                         component="img"
                                         height="70%"
+                                        image={match.profileImage}
                                         alt={match.name}
-                                        src={match.profileImage} // Assuming profileImage is a URL
-                                        sx={{
-                                            marginTop: "20px",
-                                            justifyContent: "center",
-                                            width: "100px",
-                                            height: "120px",
-                                            padding: "10px",
-                                        }}
+
+                                        sx={{ marginTop:'20px',  justifyContent: 'center', width: "100px", height: "100px", padding: '10px' }}
                                     />
                                     <CardContent>
-                                        <Typography
-                                            variant="h5"
-                                            component="div"
-                                            align="right"
-                                            sx={{ marginBottom: "10px", justifyContent: "right" }}
-                                        >
+                                        <Typography variant="h5" component="div" align= "right" sx={{marginBottom:'10px', justifyContent: 'right'}}>
                                             {match.name}
                                         </Typography>
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                            align="right"
-                                        >
+                                        <Typography variant="body2" color="text.secondary" align= "right">
                                             {match.bio}
                                         </Typography>
-                                        <Typography
-                                            variant="h5"
-                                            component="div"
-                                            align="right"
-                                            color="blue"
-                                            sx={{ marginTop: "10px", textAlign: "right" }}
-                                        >
+                                        <Typography variant="h5" component="div" align= "right" color="blue" sx={{ marginTop: '10px', textAlign: 'right' }}>
                                             {match.matchPercentage}% Match
                                         </Typography>
                                     </CardContent>
                                 </Box>
-                                <Box
-                                    alignItems="center"
-                                    sx={{ align: "center", justifyContent: "center", padding: "10px" }}
+
+                                    <Box
+                                        alignItems="center"
+                                        sx={{ align: 'center', justifyContent: 'center', padding:'10px' }}
+                                    >
+                                    <Button size="small"
+                                            variant="outlined"
+                                            onClick={() => message(currentUser, match)}
+                                            sx={{ color: 'green',  borderColor: 'green', paddingRight:'10px', mx: 2 }}
+                                    >
+                                        Message Now</Button>
+                                    <Button size="small"
+                                            variant="outlined"
+                                            onClick={() => removeMatch(match)}
+                                            sx={{ color: 'red',  borderColor: 'red',paddingLeft:'10px' }} >Not Interested </Button>
+                                    </Box>
+
+                                <Box align= 'center'
+                                    sx={{ align: 'center', paddingBottom: '10px', paddingLeft: '100px'}}
                                 >
-                                    <Button
-                                        size="small"
-                                        variant="outlined"
-                                        onClick={() => message(currentUser, match)}
-                                        sx={{ color: "green", borderColor: "green", paddingRight: "10px", mx: 2 }}
-                                    >
-                                        Message Now
-                                    </Button>
-                                    <Button
-                                        size="small"
-                                        variant="outlined"
-                                        onClick={() => removeMatch(match)}
-                                        sx={{ color: "red", borderColor: "red", paddingLeft: "10px" }}
-                                    >
-                                        Not Interested
-                                    </Button>
+
                                 </Box>
                             </Card>
-                        ))
-                        )}
+                        ))}
                     </Box>
                 </Grid>
             </Grid>
-            )}
         </div>
     );
 }
-
-//     return(
-//         <div>
-//             <Navbar   maxWidth="lg"/>
-//             <Grid container spacing={2}>
-//                 <Grid item xs={2}>
-
-//                     <Sidebar/>
-
-//                 </Grid>
-//                 <Grid item xs={8}
-//                       alignItems="center" >
-//                     <Box align= 'center' style={{
-//                         display: 'flex',
-//                         justifyContent: 'center',
-//                         alignItems: 'center',
-//                         flexDirection: 'column', // Center items vertically
-//                         gap: '10px',
-
-//                     }}>
-//                     <div>
-//                         <Typography sx={{ fontFamily: 'Segoe UI Symbol',fontSize:'30px', paddingLeft: '115px'}}> Your Matches</Typography>
-//                     </div>
-//                         {matches.map((match, index) => (
-//                             <Card
-//                                 key={index}
-//                                 sx={{ width: 600, Height: 200, align: 'center', marginTop: '10px' }}
-//                             >
-//                                 <Box display="flex">
-//                                     <CardMedia
-//                                         component="img"
-//                                         height="70%"
-//                                         image={match.image}
-//                                         alt={match.name}
-
-//                                         sx={{ marginTop:'20px',  justifyContent: 'center', width: "100px", height: "120px", padding: '10px' }}
-//                                     />
-//                                     <CardContent>
-//                                         <Typography variant="h5" component="div" align= "right" sx={{marginBottom:'10px', justifyContent: 'right'}}>
-//                                             {match.name}
-//                                         </Typography>
-//                                         <Typography variant="body2" color="text.secondary" align= "right">
-//                                             {match.bio}
-//                                         </Typography>
-//                                         <Typography variant="h5" component="div" align= "right" color="blue" sx={{ marginTop: '10px', textAlign: 'right' }}>
-//                                             {match.matchPercentage}% Match
-//                                         </Typography>
-//                                     </CardContent>
-//                                 </Box>
-
-//                                     <Box
-//                                         alignItems="center"
-//                                         sx={{ align: 'center', justifyContent: 'center', padding:'10px' }}
-//                                     >
-//                                     <Button size="small"
-//                                             variant="outlined"
-//                                             onClick={() => message(currentUser, match)}
-//                                             sx={{ color: 'green',  borderColor: 'green', paddingRight:'10px', mx: 2 }}
-//                                     >
-//                                         Message Now</Button>
-//                                     <Button size="small"
-//                                             variant="outlined"
-//                                             onClick={() => removeMatch(match)}
-//                                             sx={{ color: 'red',  borderColor: 'red',paddingLeft:'10px' }} >Not Interested </Button>
-//                                     </Box>
-
-//                                 <Box align= 'center'
-//                                     sx={{ align: 'center', paddingBottom: '10px', paddingLeft: '100px'}}
-//                                 >
-
-//                                 </Box>
-//                             </Card>
-//                         ))}
-//                     </Box>
-//                 </Grid>
-//             </Grid>
-//         </div>
-//     );
-// }

@@ -197,39 +197,6 @@ const storeSurveyResults = async (userId, surveyData) => {
     }
 };
 
-
-const removeMatchFromFirestore = async (currentUser, match) => {
-    try {
-        const userRef = doc(firestore, "users", currentUser.uid);
-        await updateDoc(userRef, {
-            matches: firestore.FieldValue.arrayRemove({
-                uid: match.uid,
-                status: 'not interested',
-            }),
-        });
-    } catch (error) {
-        console.error("Error marking match as not interested in Firestore:", error);
-    }
-};
-
-// for matches page
-const getUserDataByUID = async (uid) => {
-    try {
-        const userRef = doc(firestore, "users", uid);
-        const userDoc = await getDoc(userRef);
-
-        if (userDoc.exists()) {
-            return userDoc.data();
-        } else {
-            console.error(`User document not found for UID: ${uid}`);
-            return null;
-        }
-    } catch (error) {
-        console.error("Error fetching user data:", error);
-        return null;
-    }
-};
-
 const updateMatchesForNewUser = async (newUserId) => {
     try {
         const usersQuerySnapshot = await getDocs(collection(firestore, "users"));
@@ -240,12 +207,16 @@ const updateMatchesForNewUser = async (newUserId) => {
             if (userId !== newUserId) {
                 const matchesRef = doc(firestore, "matches", userId);
 
-                // Update matches for other users by adding the new user to the matches map
-                await updateDoc(matchesRef, {
-                    [`matches.${newUserId}`]: {
-                        uid: newUserId,
-                        status: "pending",
-                    },
+                // Get the current matches data
+                const matchesDoc = await getDoc(matchesRef);
+                const currentMatches = matchesDoc.exists() ? matchesDoc.data().matches || [] : [];
+
+                // Add the new user to the matches array
+                const updatedMatches = [...currentMatches, newUserId];
+
+                // Update matches for other users by setting the new matches array
+                await setDoc(matchesRef, {
+                    matches: updatedMatches,
                 });
             }
         }
@@ -263,17 +234,31 @@ const createUserMatchesDocument = async (userId) => {
         const matchesRef = doc(firestore, "matches", userId);
         const timestamp = new Date();
 
-        //structure for the matches doc
+        // get all users except current
+        const usersQuerySnapshot = await getDocs(collection(firestore, "users"));
+
+        // array will be used to store matches for new user
+        const matchesArray = [];
+
+        // loop throgh all users except new user
+        usersQuerySnapshot.forEach((userDoc) => {
+            const otherUserId = userDoc.id;
+            if (otherUserId != userId) {
+                matchesArray.push(otherUserId);
+            }
+        });
+
+        // matches doc structure
         const matchesDocData = {
             date: timestamp,
-            matches: {},
-        };
+            matches: matchesArray,
+        }
 
         await setDoc(matchesRef, matchesDocData);
-
+        
         console.log("Matches document created successfully for user: " + userId);
 
-        // Update matches for other users by adding the new user to their matches map
+        // update matches for new user by adding it to the other users arraylist
         await updateMatchesForNewUser(userId);
     } catch (err) {
         console.error(err);
@@ -301,8 +286,6 @@ export{
     app,
     createUserChatsDocument,
     storage,
-    removeMatchFromFirestore,
-    getUserDataByUID,
 };
 
 // Initialize Firebase

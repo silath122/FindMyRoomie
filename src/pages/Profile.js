@@ -129,7 +129,9 @@ function YourProfile(){
                          src={profileImage || require("../pictures/imagePlaceholder.jpg")}
                          alt="FindMyRoomie"
                          id="output"
-                         className="logo1"/>
+                         className="logo1"
+                         style={{borderRadius: '50%', width: '150px', height: '150px'}}
+                         />
                     <div id="profile-picture-container">
 
                     </div>
