@@ -72,10 +72,7 @@ const Input = () => {
         placeholder="Type here!" 
         onChange={e=>setText(e.target.value)}/>
         <div className="send">
-            <input type="file" style={{display: "none"}} id="file" onChange={(e)=> setImg(e.target.files[0])}/>
-            <label htmlFor="file">
-                <img src={Attach} alt="File"/>
-            </label>
+            
             <button onClick={handleSend}>Send</button>
         </div>
     </div>
