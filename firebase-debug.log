@@ -1,0 +1,38 @@
+[debug] [2024-03-27T19:34:43.329Z] ----------------------------------------------------------------------
+[debug] [2024-03-27T19:34:43.339Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\silat\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2024-03-27T19:34:43.340Z] CLI Version:   13.3.0
+[debug] [2024-03-27T19:34:43.340Z] Platform:      win32
+[debug] [2024-03-27T19:34:43.340Z] Node Version:  v20.8.1
+[debug] [2024-03-27T19:34:43.341Z] Time:          Wed Mar 27 2024 15:34:43 GMT-0400 (Eastern Daylight Time)
+[debug] [2024-03-27T19:34:43.341Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-03-27T19:34:43.506Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-03-27T19:34:43.506Z] > authorizing via signed-in user (thomassl1@g.cofc.edu)
+[debug] [2024-03-27T19:34:43.506Z] [iam] checking project findmyroomie-1c447 for permissions ["firebase.projects.get"]
+[debug] [2024-03-27T19:34:43.507Z] > refreshing access token with scopes: []
+[debug] [2024-03-27T19:34:43.509Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2024-03-27T19:34:43.509Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-03-27T19:34:43.762Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2024-03-27T19:34:43.763Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-03-27T19:34:43.773Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/findmyroomie-1c447:testIamPermissions [none]
+[debug] [2024-03-27T19:34:43.774Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/findmyroomie-1c447:testIamPermissions x-goog-quota-user=projects/findmyroomie-1c447
+[debug] [2024-03-27T19:34:43.774Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/findmyroomie-1c447:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2024-03-27T19:34:44.142Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/findmyroomie-1c447:testIamPermissions 200
+[debug] [2024-03-27T19:34:44.142Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/findmyroomie-1c447:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2024-03-27T19:34:44.143Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/findmyroomie-1c447 [none]
+[debug] [2024-03-27T19:34:44.801Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/findmyroomie-1c447 200
+[debug] [2024-03-27T19:34:44.801Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/findmyroomie-1c447 {"projectId":"findmyroomie-1c447","projectNumber":"338332794962","displayName":"FindMyRoomie","name":"projects/findmyroomie-1c447","resources":{"hostingSite":"findmyroomie-1c447","realtimeDatabaseInstance":"findmyroomie-1c447-default-rtdb","storageBucket":"findmyroomie-1c447.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_cfb98619-a396-4aa7-9d13-713b2f932006"}
+[info] 
+[info] === Serving from 'C:\Users\silat\OneDrive\CSCI 362\find-my-roomie'...
+[info] 
+[debug] [2024-03-27T19:34:44.807Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/findmyroomie-1c447/sites 
+[debug] [2024-03-27T19:34:45.462Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/findmyroomie-1c447/sites 200
+[debug] [2024-03-27T19:34:45.463Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/findmyroomie-1c447/sites {"sites":[{"name":"projects/findmyroomie-1c447/sites/findmyroomie-1c447","defaultUrl":"https://findmyroomie-1c447.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2024-03-27T19:34:45.463Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/findmyroomie-1c447/webApps/-/config [none]
+[debug] [2024-03-27T19:34:46.043Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/findmyroomie-1c447/webApps/-/config 200
+[debug] [2024-03-27T19:34:46.043Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/findmyroomie-1c447/webApps/-/config {"projectId":"findmyroomie-1c447","appId":"1:338332794962:web:7949423d28e531dd211f8b","databaseURL":"https://findmyroomie-1c447-default-rtdb.firebaseio.com","storageBucket":"findmyroomie-1c447.appspot.com","locationId":"us-central","apiKey":"AIzaSyAdVvP6M7tG2mwOO1SiKyh7eQO2M2vYDSY","authDomain":"findmyroomie-1c447.firebaseapp.com","messagingSenderId":"338332794962"}
+[debug] [2024-03-27T19:34:46.058Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/findmyroomie-1c447 [none]
+[debug] [2024-03-27T19:34:46.303Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/findmyroomie-1c447 200
+[debug] [2024-03-27T19:34:46.304Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/findmyroomie-1c447 {"projectId":"findmyroomie-1c447","projectNumber":"338332794962","displayName":"FindMyRoomie","name":"projects/findmyroomie-1c447","resources":{"hostingSite":"findmyroomie-1c447","realtimeDatabaseInstance":"findmyroomie-1c447-default-rtdb","storageBucket":"findmyroomie-1c447.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_cfb98619-a396-4aa7-9d13-713b2f932006"}
+[info] i  hosting[findmyroomie-1c447]: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting[findmyroomie-1c447]: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
